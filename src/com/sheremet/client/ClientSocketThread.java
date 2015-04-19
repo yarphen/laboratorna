@@ -1,5 +1,8 @@
 package com.sheremet.client;
 
-public class ClientSocketThread {
-
+public class ClientSocketThread extends Thread{
+	@Override
+	public void run() {
+		
+	}
 }
