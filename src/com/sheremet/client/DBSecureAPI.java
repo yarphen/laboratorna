@@ -1,17 +1,20 @@
 package com.sheremet.client;
 
 import com.sheremet.utils.Bratchyk;
-import com.sheremet.utils.BratchykVersion;
 import com.sheremet.utils.User;
 
 public class DBSecureAPI {
+	public DBSecureAPI(ClientConnection connection, String access_token) {
+		//link all requests to this connection
+		//set access token
+	}
 	public Bratchyk getBratchyk(long id, String access_token){
 		return null;
 	}
 	public boolean setBratchyk(Bratchyk bratchyk, long id, String access_token){
 		return false;
 	}
-	public BratchykVersion[] getBratchykHistory(Bratchyk bratchyk, long id, String access_token){
+	public Bratchyk[] getBratchykHistory(Bratchyk bratchyk, long id, String access_token){
 		return null;
 	}
 	public User[] getUserList(String access_token){

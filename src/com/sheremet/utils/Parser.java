@@ -13,12 +13,21 @@ public class Parser {
 		
 	}
 	public Object parse(String s) {
-		
+		StringBuilder builder = new StringBuilder(s);
+		while(builder.length()>0&&builder.charAt(0)==' '){
+			builder.deleteCharAt(0);
+		}
+		if (builder.length()==0)return null;
+		if (builder.charAt(0)=='%'){
+			String string = builder.substring(0, builder.indexOf("\""));
+			
+		}
 		return s;
 		// TODO Auto-generated method stub
 
 	}
 	public static void main(String[] args) {
-		System.out.println(URLDecoder.decode("%30"));
+		String builder = "12313131a\"f23123123";
+		System.out.println(builder .substring(0, builder.indexOf("\"")));
 	}
 }

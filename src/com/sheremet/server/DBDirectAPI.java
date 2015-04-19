@@ -9,7 +9,7 @@ public class DBDirectAPI {
 	public boolean setBratchyk(Bratchyk bratchyk, long id){
 		return false;
 	}
-	public BratchykVersion[] getBratchykHistory(Bratchyk bratchyk, long id){
+	public Bratchyk[] getBratchykHistory(Bratchyk bratchyk, long id){
 		return null;
 	}
 	public User[] getUserList(){
