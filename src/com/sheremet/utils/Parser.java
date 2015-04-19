@@ -2,6 +2,7 @@ package com.sheremet.utils;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 public class Parser {
 	public static final int INT=0;
@@ -12,7 +13,16 @@ public class Parser {
 		return 0;
 		
 	}
-	public Object parse(String s) {
+	public static HashMap<String, Object> parse(String s) {
+		
+		// TODO Auto-generated method stub
+
+	}
+	public static void main(String[] args) {
+		String builder = "12313131a\"f23123123";
+		System.out.println(builder .substring(0, builder.indexOf("\"")));
+	}
+	private Object parseStringToObject(String s) {
 		StringBuilder builder = new StringBuilder(s);
 		while(builder.length()>0&&builder.charAt(0)==' '){
 			builder.deleteCharAt(0);
@@ -22,12 +32,7 @@ public class Parser {
 			String string = builder.substring(0, builder.indexOf("\""));
 			
 		}
-		return s;
-		// TODO Auto-generated method stub
-
+		return builder.toString();
 	}
-	public static void main(String[] args) {
-		String builder = "12313131a\"f23123123";
-		System.out.println(builder .substring(0, builder.indexOf("\"")));
-	}
+	
 }

@@ -1,5 +1,6 @@
 package com.sheremet.client;
 
+import java.net.ConnectException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ClientConnection extends Thread{
@@ -18,9 +19,9 @@ public class ClientConnection extends Thread{
 	}
 	@Override
 	public void run() {
-//		send all commands in infinite cicle to server and invoke StringResultHandler's method handle
+		//		send all commands in infinite cicle to server and invoke StringResultHandler's method handle
 	}
 }
 abstract class StringResultHandler{
-	abstract void handle(String s);
+	abstract void handle(String s) throws Exception;
 }
