@@ -1,6 +1,5 @@
 package com.sheremet.client;
 
-import java.net.ConnectException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ClientConnection extends Thread{
@@ -10,7 +9,7 @@ public class ClientConnection extends Thread{
 	}
 	LinkedBlockingQueue<Node> queue;
 	public ClientConnection() {
-		// create connection
+		// open connection
 	}
 	public void send(String command, StringResultHandler handler){
 		String result = null;
