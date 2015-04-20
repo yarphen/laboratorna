@@ -31,7 +31,9 @@ public class ClientConnection extends Thread{
 		//push command to queue
 		//notify this thread if it is sleeping 
 		queue.add(new Node(command, handler));
-		notify();
+		synchronized (this) {
+			notify();
+		}
 	}
 	@Override
 	public void run() {

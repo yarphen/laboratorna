@@ -1,6 +1,7 @@
 package com.sheremet.client;
 
 import java.net.ConnectException;
+import java.sql.Date;
 import java.util.HashMap;
 
 import com.sheremet.utils.Bratchyk;
@@ -12,7 +13,12 @@ public class DBSecureAPI {
 	private ClientConnection connection;
 	public DBSecureAPI(ClientConnection connection,  String login, String password) {
 		this.connection = connection;
-		connection.send("act=login\\login="+login+"\\password="+password, new StringResultHandler() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("access_token", access_token);
+		map.put("act", "login");
+		map.put("login", login);
+		map.put("password", password);
+		connection.send(Parser.unparse(map), new StringResultHandler() {
 			
 			@Override
 			void handle(String s) throws Exception {
@@ -26,7 +32,31 @@ public class DBSecureAPI {
 		});
 	}
 	public Bratchyk getBratchyk(long id){
-		return null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("access_token", access_token);
+		map.put("act", "get");
+		map.put("id", id);
+		final Bratchyk bratchyk = new Bratchyk();
+		connection.send(Parser.unparse(map), new StringResultHandler() {
+			
+			@Override
+			void handle(String s) throws Exception {
+				HashMap<String, Object> map = Parser.parse(s);
+				bratchyk.dataankety = (Date) map.get("dataankety");
+				bratchyk.datanarodzhennia = (Date) map.get("datanarodzhennia");
+				bratchyk.dataopatronennia = (Date) map.get("dataopatronennia");
+				bratchyk.dataposhanuvannia = (Date) map.get("dataposhanuvannia");
+				bratchyk.datavysviaty = (Date) map.get("datavysviaty");
+				bratchyk.imya = (String) map.get("imya");
+				bratchyk.kontakty = (String) map.get("kontakty");
+				bratchyk.patron_id = (Integer) map.get("patron_id");
+				bratchyk.pobatkovi = (String) map.get("pobatkovi");
+				bratchyk.posady = (String) map.get("posady");
+				bratchyk.prizvysche = (String) map.get("prizvysche");
+				bratchyk.rikvstupu = (Integer) map.get("rikvstupu");
+			}
+		});
+		return bratchyk;
 	}
 	public boolean setBratchyk(Bratchyk bratchyk, long id){
 		return false;
