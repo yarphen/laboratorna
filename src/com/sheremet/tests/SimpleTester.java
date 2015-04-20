@@ -1,15 +1,13 @@
 package com.sheremet.tests;
 
-import java.util.regex.Pattern;
+import java.io.IOException;
+import java.net.ServerSocket;
 
 public class SimpleTester {
-	public static void main(String[] args) {
-		String s = "act=\"login\"\\login=\"qwerty\"\\password=\"empty\"";
-		String [] array = s.split(Pattern.quote("\\"));
-		String temp = array[0];
-		String[] arr2 = temp.split("=", 2);
-		System.out.println(arr2[0]);
-		System.out.println(arr2[1]);
-		System.err.println();
+	public static void main(String[] args) throws IOException {
+		ServerSocket socket = new ServerSocket(80);
+		while(true){
+			new SocketThread(socket.accept()).start();
+		}
 	}
 }
