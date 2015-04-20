@@ -1,0 +1,7 @@
+act="login"\login="qwerty"\password="empty"
+Date/01/02/2013
+""
+1241515
+String s = "act=\"login\"\login=\"qwerty\"\password=\"empty\"";
+String [] array = s.split(Pattern.quote("\\"));
+String temp = array[0];
