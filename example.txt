@@ -1,11 +1,11 @@
 act="login"\login="qwerty"\password="empty"
 
-Date/01/02/2013
-"jyfuyfyf7689"
-Long 12415143636368005
-Integer 1241515
-true
-false
+java.util.Date 01/02/2013
+java.lang.String "jyfuyfyf7689"
+java.lang.Long 12415143636368005
+java.lang.Integer 1241515
+java.lang.Boolean true
+java.lang.Boolean false
 
 String s = "act=\"login\"\\login=\"qwerty\"\\password=\"empty\"";
 String [] array = s.split(Pattern.quote("\\"));
