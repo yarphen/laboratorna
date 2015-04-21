@@ -3,6 +3,9 @@ package com.sheremet.server;
 import com.sheremet.utils.*;
 
 public class DBDirectAPI {
+	public DBDirectAPI() {
+		
+	}
 	public Bratchyk getBratchyk(long id){
 		return null;
 	}
@@ -16,6 +19,9 @@ public class DBDirectAPI {
 		return null;
 	}
 	public User getUser(long id){
+		return null;
+	}
+	public User getUser(String login){
 		return null;
 	}
 	public boolean setUser(User user, long id){
