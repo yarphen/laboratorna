@@ -32,7 +32,7 @@ public class Parser {
 		return res;
 		}
 	
-	String convertFromObject(Object o){
+	public static String convertFromObject(Object o){
 		String temp = o.getClass().getName();
 		String res="";
 		switch (temp){
@@ -44,8 +44,13 @@ public class Parser {
 		case "java.lang.String":
 			res=temp+" \""+o+"\"";
 			break;
-		/*case "java.util.Date":
-			res=temp+" "+o.get*/
+		case "java.util.Date":
+			res=temp+" "+((java.util.Date)o).getDay()+"/"
+			+((java.util.Date)o).getMonth()+"/"+((java.util.Date)o).getYear();
+			break;
+		case "java.sql.Date":
+			res=temp+" "+(((java.sql.Date)o).getDay()+10)+"/"
+			+((java.sql.Date)o).getMonth()+"/"+((java.sql.Date)o).getYear();
 		}
 		return res;	
 	}

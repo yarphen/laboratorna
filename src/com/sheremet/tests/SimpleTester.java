@@ -25,7 +25,7 @@ public class SimpleTester {
 //				
 //			}
 //		}
-		HashMap<String, Object> map = new HashMap<>();
+		/*HashMap<String, Object> map = new HashMap<>();
 		map.put("imya", "678");
 		map.put("id", 123);
 		map.put("rikvstupu", 1999);
@@ -33,6 +33,7 @@ public class SimpleTester {
 		int m=6;
 		int d=29;
 		map.put("dataankety", new Date(y-1900, m-1, d));
-		Bratchyk b = new Bratchyk(map);
+		Bratchyk b = new Bratchyk(map);*/
+		System.out.println(Parser.convertFromObject(new java.util.Date(1995, 10, 14)));
 	}
 }
