@@ -20,21 +20,17 @@ public class Parser {
 	public static String unparse(HashMap<String, Object> map) {
 		String res="";
 		Set<String> set=map.keySet();
+		boolean first=true;
 		for(String s:set)
-			res+=s+"="+map.get(s)+"\\";
+			if(first){
+				res+=s+"="+map.get(s);
+				first=false;
+		}
+			else{
+				res+="\\"+s+"="+map.get(s);
+		}
 		return res;
-	}
+		}
 	
-//	int getType(Object o){
-//		String temp = o.getClass().getName();
-//		switch (temp) {
-//		case "":
-//			return 0;
-//
-//		default:
-//			return 0;
-//		}
-//		
-//	}
 	
 }
