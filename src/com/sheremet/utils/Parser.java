@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Parser {
-	
+	public static final int TYPE_IS_INTEGER = 0;
 	public static HashMap<String, Object> parse(String s) {
 		String[] arr=s.split(Pattern.quote("\\"));
 		HashMap<String, Object> map=new HashMap();
@@ -25,9 +25,16 @@ public class Parser {
 		return res;
 	}
 	
-	String getType(Object o){
-		return o.getClass().getSimpleName();
-		
-	}
+//	int getType(Object o){
+//		String temp = o.getClass().getName();
+//		switch (temp) {
+//		case "":
+//			return 0;
+//
+//		default:
+//			return 0;
+//		}
+//		
+//	}
 	
 }

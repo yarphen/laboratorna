@@ -2,7 +2,8 @@ act="login"\login="qwerty"\password="empty"
 
 Date/01/02/2013
 "jyfuyfyf7689"
-1241515
+Long 12415143636368005
+Integer 1241515
 true
 false
 
