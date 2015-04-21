@@ -8,7 +8,7 @@ import com.sheremet.utils.User;
 public class SecurityManager {
 	public SecurityManager() {
 		// load database
-		//and init
+		// and init
 	}
 	public boolean tryToDo(HashMap<String, Object> command){
 		return true;

@@ -18,7 +18,8 @@ public class DBSecureAPI {
 		map.put("act", "login");
 		map.put("login", login);
 		map.put("password", password);
-		connection.send(Parser.unparse(map), new StringResultHandler() {
+		String string  = Parser.unparse(map);
+		connection.send(string, new StringResultHandler() {
 			
 			@Override
 			void handle(String s) throws Exception {
