@@ -32,5 +32,22 @@ public class Parser {
 		return res;
 		}
 	
+	String convertFromObject(Object o){
+		String temp = o.getClass().getName();
+		String res="";
+		switch (temp){
+		case "java.lang.Integer":
+		case "java.lang.Long":
+		case "java.lang.Boolean":
+			res=temp+" "+o;
+			break;
+		case "java.lang.String":
+			res=temp+" \""+o+"\"";
+			break;
+		/*case "java.util.Date":
+			res=temp+" "+o.get*/
+		}
+		return res;	
+	}
 	
 }
