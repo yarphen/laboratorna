@@ -1,7 +1,17 @@
 act="login"\login="qwerty"\password="empty"
+
 Date/01/02/2013
-""
+"jyfuyfyf7689"
 1241515
-String s = "act=\"login\"\login=\"qwerty\"\password=\"empty\"";
+true
+false
+
+String s = "act=\"login\"\\login=\"qwerty\"\\password=\"empty\"";
 String [] array = s.split(Pattern.quote("\\"));
 String temp = array[0];
+
+java.lang.String
+java.lang.Integer
+java.lang.Boolean
+java.util.Date
+java.sql.Date
