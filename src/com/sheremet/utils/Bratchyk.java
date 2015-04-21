@@ -7,12 +7,12 @@ import java.util.Set;
 
 public class Bratchyk {
 	public Bratchyk(HashMap<String, Object> map) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException{
-		Class bratchykClass = Bratchyk.class;
+		Class<Bratchyk> bratchykClass = Bratchyk.class;
 		Set<String> set = map.keySet();
 		for (String s:set){
-			bratchykClass.getField(s).set(this, map.get(s));
+			Field f = bratchykClass.getField(s);
+			f.set(this, map.get(s));
 		}
-		
 	}
 	public Bratchyk(Bratchyk b) {
 		dataankety = b.dataankety;
