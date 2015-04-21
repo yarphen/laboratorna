@@ -1,8 +1,19 @@
 package com.sheremet.utils;
 
+import java.lang.reflect.Field;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Bratchyk {
+	public Bratchyk(HashMap<String, Object> map) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException{
+		Class bratchykClass = Bratchyk.class;
+		Set<String> set = map.keySet();
+		for (String s:set){
+			bratchykClass.getField(s).set(this, map.get(s));
+		}
+		
+	}
 	public Bratchyk(Bratchyk b) {
 		dataankety = b.dataankety;
 		datanarodzhennia = b.datanarodzhennia;
@@ -29,7 +40,7 @@ public class Bratchyk {
 	public Date dataopatronennia;
 	public Date dataposhanuvannia;
 	public Date datavysviaty;//private
-	public long id;
+	public Long id;
 	public String imya;
 	public String kontakty;//private
 	public Integer patron_id;

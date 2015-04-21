@@ -15,8 +15,9 @@ public class SimpleTester {
 				try{
 					ServerSocket socket = new ServerSocket(i);
 					map.put(i, socket);
+					System.out.println(i);
 				}catch(Exception e){}
-				System.out.println(i);
+				
 			}
 		}
 	}

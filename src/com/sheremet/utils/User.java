@@ -1,6 +1,11 @@
 package com.sheremet.utils;
 
+import java.util.HashMap;
+
 public class User {
+	public User(HashMap<String, Object> map) {
+		
+	}
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
@@ -14,6 +19,6 @@ public class User {
 	public String name;
 	public String email;
 	public String passhash;
-	public int permission;
-	public long id;
+	public Integer permission;
+	public Long id;
 }
