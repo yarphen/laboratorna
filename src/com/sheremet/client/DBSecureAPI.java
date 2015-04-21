@@ -64,10 +64,10 @@ public class DBSecureAPI {
 	public Bratchyk[] getBratchykHistory(Bratchyk bratchyk, long id){
 		return null;
 	}
-	public User[] getUserList(String access_token){
+	public User[] getUserList(){
 		return null;
 	}
-	public User getUser(long id, String access_token){
+	public User getUser(long id){
 		return null;
 	}
 	public boolean setUser(User user, long id){

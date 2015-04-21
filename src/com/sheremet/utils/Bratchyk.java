@@ -18,4 +18,5 @@ public class Bratchyk {
 	public Date dataposhanuvannia;
 	public Integer patron_id;
 	public Integer version_id;//private
+	long id;
 }

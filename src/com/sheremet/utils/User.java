@@ -6,4 +6,5 @@ public class User {
 	String email;
 	String passhash;
 	int permission;
+	long id;
 }
