@@ -10,6 +10,9 @@ import java.sql.Statement;
 
 
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import com.sheremet.utils.*;
 
 public class DBDirectAPI {
@@ -28,6 +31,36 @@ public class DBDirectAPI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public Bratchyk[] getBratchykList(){
+		LinkedList<User> list = new LinkedList<>();
+		try{
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM bratchyk");
+			Bratchyk b = new Bratchyk();
+			while (rs.next()){
+				b.dataankety = rs.getDate("dataankety");
+				b.datanarodzhennia = rs.getDate("datanarodzhennia");
+				b.dataopatronennia = rs.getDate("dataopatronennia");
+				b.dataposhanuvannia = rs.getDate("dataposhanuvannia");
+				b.datavysviaty = rs.getDate("datavysviaty");
+				b.id = rs.getLong("id");
+				b.imya = rs.getString("imya");
+				b.kontakty = rs.getString("kontakty");
+				b.patron_id = rs.getInt("patron_id");
+				b.pobatkovi = rs.getString("pobatkovi");
+				b.posady = rs.getString("posady");
+				b.prizvysche = rs.getString("prizvysche");
+				b.rikvstupu = rs.getInt("rikvstupu");
+				b.rikvypusku = rs.getInt("rikvypusku");
+				b.specialnist = rs.getString("specialnist");
+				b.version_id = rs.getInt("version_id");	
+			}
+		}catch (SQLException e){
+			return null;
+		}
+		Object[] objects = list.toArray();
+		return Arrays.copyOf(objects, objects.length, Bratchyk[].class);
 	}
 	public Bratchyk getBratchyk(long id){
 		try{
@@ -102,7 +135,24 @@ public class DBDirectAPI {
 		return null;
 	}
 	public User[] getUserList(){
-		return null;
+		LinkedList<User> list = new LinkedList<>();
+		try{
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM students");
+			User u = new User();
+			while (rs.next()){
+				u.name = rs.getString("name");
+				u.email = rs.getString("email");
+				u.passhash = rs.getString("passhash");
+				u.permission = rs.getInt("permission");
+				u.id = rs.getLong("id");
+				list.add(u);
+			}
+		}catch (SQLException e){
+			return null;
+		}
+		Object[] objects = list.toArray();
+		return Arrays.copyOf(objects, objects.length, User[].class);
 	}
 	public User getUser(long id){
 		try{
