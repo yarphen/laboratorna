@@ -2,8 +2,11 @@ package com.sheremet.server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import api.Student;
 
 import com.sheremet.utils.*;
 
@@ -25,7 +28,21 @@ public class DBDirectAPI {
 		}
 	}
 	public Bratchyk getBratchyk(long id){
-		return null;
+		try{
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM students WHERE id="+l);
+			Bratchyk b = new Bratchyk();
+			if (rs.next()){
+				b.name = rs.getString("name");
+				b.speciality = rs.getInt("speciality");
+				b.year = rs.getInt("year");
+				b.birth = rs.getDate("birth");
+				b.contacts = rs.getString("contacts");
+				return b;
+			}else return null;
+		}catch (SQLException e){
+			return null;
+		}
 	}
 	public boolean setBratchyk(Bratchyk bratchyk, long id){
 		return false;
@@ -37,10 +54,38 @@ public class DBDirectAPI {
 		return null;
 	}
 	public User getUser(long id){
-		return null;
+		try{
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM students WHERE id="+l);
+			Bratchyk b = new Bratchyk();
+			if (rs.next()){
+				b.name = rs.getString("name");
+				b.speciality = rs.getInt("speciality");
+				b.year = rs.getInt("year");
+				b.birth = rs.getDate("birth");
+				b.contacts = rs.getString("contacts");
+				return b;
+			}else return null;
+		}catch (SQLException e){
+			return null;
+		}
 	}
 	public User getUser(String login){
-		return null;
+		try{
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM students WHERE id="+l);
+			Bratchyk b = new Bratchyk();
+			if (rs.next()){
+				b.name = rs.getString("name");
+				b.speciality = rs.getInt("speciality");
+				b.year = rs.getInt("year");
+				b.birth = rs.getDate("birth");
+				b.contacts = rs.getString("contacts");
+				return b;
+			}else return null;
+		}catch (SQLException e){
+			return null;
+		}
 	}
 	public boolean setUser(User user, long id){
 		return false;
