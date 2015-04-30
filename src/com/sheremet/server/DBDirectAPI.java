@@ -267,26 +267,7 @@ public class DBDirectAPI {
 		try{
 			long id = generateID();
 			bratchyk.id = generateID();
-			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			statement.setDate(1, bratchyk.dataankety);
-			statement.setDate(2, bratchyk.datanarodzhennia);
-			statement.setDate(3, bratchyk.dataopatronennia);
-			statement.setDate(4, bratchyk.dataposhanuvannia);
-			statement.setDate(5, bratchyk.datavysviaty);
-			statement.setLong(6, id);
-			statement.setString(7, bratchyk.imya);
-			statement.setString(8, bratchyk.kontakty);
-			statement.setLong(9, bratchyk.patron_id);
-			statement.setString(10, bratchyk.prizvysche);
-			statement.setString(11, bratchyk.pobatkovi);
-			statement.setString(12, bratchyk.posady);
-			statement.setInt(13, bratchyk.rikvstupu);
-			statement.setInt(14, bratchyk.rikvypusku);
-			statement.setString(15, bratchyk.specialnist);
-			statement.setLong(16, System.currentTimeMillis());
-			statement.setInt(17, 1);
-			statement.execute();
-			statement.close();
+			
 			return true;
 		}catch (SQLException e){
 			return false;
@@ -326,5 +307,48 @@ public class DBDirectAPI {
 		l=l*1000;
 		l=l+(int)(Math.random()*1000+0.5);
 		return l;
+	}
+	private Bratchyk currentBratchyk(ResultSet set){
+		
+	}
+	private Bratchyk currentUser(ResultSet set){
+		
+	}
+	private Bratchyk setUser(PreparedStatement st, boolean setId){
+		
+	}
+	private Bratchyk setBratchyk(PreparedStatement st, boolean setId, boolean active){
+		if (setId){
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		}else{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		}
+		statement.setDate(1, bratchyk.dataankety);
+		statement.setDate(2, bratchyk.datanarodzhennia);
+		statement.setDate(3, bratchyk.dataopatronennia);
+		statement.setDate(4, bratchyk.dataposhanuvannia);
+		statement.setDate(5, bratchyk.datavysviaty);
+		statement.setString(6, bratchyk.imya);
+		statement.setString(7, bratchyk.kontakty);
+		statement.setLong(8, bratchyk.patron_id);
+		statement.setString(9, bratchyk.prizvysche);
+		statement.setString(10, bratchyk.pobatkovi);
+		statement.setString(11, bratchyk.posady);
+		statement.setInt(12, bratchyk.rikvstupu);
+		statement.setInt(13, bratchyk.rikvypusku);
+		statement.setString(14, bratchyk.specialnist);
+		statement.setLong(15, System.currentTimeMillis());
+		if (active){
+			statement.setInt(17, 1);
+		}else{
+			statement.setInt(17, 0);
+		}
+		if (active){
+			statement.setInt(17, 1);
+		}else{
+			statement.setInt(17, 0);
+		}
+		statement.execute();
+		statement.close();
 	}
 }
