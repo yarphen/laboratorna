@@ -3,8 +3,9 @@ package com.sheremet.server;
 import java.net.Socket;
 
 public class ServerSocketThread extends Thread{
+	Socket socket;
 	public ServerSocketThread(Socket socket) {
-		// TODO Auto-generated constructor stub
+		this.socket=socket;
 	}
 	@Override
 	public void run() {

@@ -51,5 +51,9 @@ public class Bratchyk {
 	public Integer rikvypusku;
 	public String specialnist;
 	public Integer version_id;//private
+	public void makeCopy(Bratchyk bratchyk) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

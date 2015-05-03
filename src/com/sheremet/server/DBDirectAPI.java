@@ -317,11 +317,12 @@ public class DBDirectAPI {
 	private Bratchyk setUser(PreparedStatement st, boolean setId){
 		
 	}
-	private Bratchyk setBratchyk(PreparedStatement st, boolean setId, boolean active){
+	private void setBratchyk(Bratchyk bratchyk, boolean setId, boolean active) throws SQLException{
+		PreparedStatement statement;
 		if (setId){
-			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		}else{
-			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		}
 		statement.setDate(1, bratchyk.dataankety);
 		statement.setDate(2, bratchyk.datanarodzhennia);
