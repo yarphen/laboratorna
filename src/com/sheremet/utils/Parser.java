@@ -53,7 +53,6 @@ public class Parser {
         	DocumentBuilder db = dbf.newDocumentBuilder();
         	Document document = db.newDocument();
 //        	document.
-        	Element element 
         	
         } catch (Exception e) {
             e.printStackTrace();
