@@ -3,6 +3,7 @@ package com.sheremet.utils;
 import java.util.HashMap;
 
 import com.sheremet.client.ClientConnection;
+import com.sheremet.client.StringResultHandler;
 
 public class Command {
 	private Commands type;
@@ -32,9 +33,26 @@ public class Command {
 		this.map=map;
 	}
 
-	public Object send(ClientConnection connection) {
+	public Object send(final ClientConnection connection) {
+		String str = Parser.unparseXMLstring(type, map);
+		final Result result = new Result();
+		connection.send(str, new StringResultHandler() {
+			
+			@Override
+			public void handle(String s) throws Exception {
+				result.setValue(Parser.parserXMLstring(s));
+				synchronized (connection) {
+					connection.notifyAll();
+				}
+			}
+		});
+		try {
+			synchronized (connection) {
+				connection.wait();
+			}
+		} catch (InterruptedException e) {}
 		
-		return false;
+		return result.getValue();
 	}
 
 }

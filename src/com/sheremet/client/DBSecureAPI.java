@@ -21,7 +21,7 @@ public class DBSecureAPI {
 		connection.send(string, new StringResultHandler() {
 
 			@Override
-			void handle(String s) throws Exception {
+			public void handle(String s) throws Exception {
 				HashMap<String, Object> map = Parser.parse(s);
 				if (map.get("success").equals("true")){
 					access_token = (String) map.get("access_token");

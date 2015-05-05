@@ -54,5 +54,16 @@ public class Parser {
 		}
 		return res;	
 	}
+
+
+	public static String unparseXMLstring(Commands type, HashMap map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Object parserXMLstring(String s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

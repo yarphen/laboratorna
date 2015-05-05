@@ -66,6 +66,3 @@ public class ClientConnection extends Thread{
 		//		send all commands in infinite cicle to server and invoke StringResultHandler's method handle
 	}
 }
-abstract class StringResultHandler{
-	abstract void handle(String s) throws Exception;
-}
