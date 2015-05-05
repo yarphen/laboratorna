@@ -5,32 +5,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Parser {
-	public static final int TYPE_IS_INTEGER = 0;
-	public static HashMap<String, Object> parse(String s) {
-		String[] arr=s.split(Pattern.quote("\\"));
-		HashMap<String, Object> map=new HashMap();
-		String temp[]=new String[2];
-		for(String s1:arr){
-			temp=s1.split(Pattern.quote("="),2);
-			map.put(temp[0], temp[1]);
-		}
-		return map;
-	}
 	
-	public static String unparse(HashMap<String, Object> map) {
-		String res="";
-		Set<String> set=map.keySet();
-		boolean first=true;
-		for(String s:set)
-			if(first){
-				res+=s+"="+map.get(s);
-				first=false;
-		}
-			else{
-				res+="\\"+s+"="+map.get(s);
-		}
-		return res;
-		}
+	public static final int TYPE_IS_INTEGER = 0;
 	
 	public static String convertFromObject(Object o){
 		String temp = o.getClass().getName();
@@ -57,7 +33,7 @@ public class Parser {
 
 
 	public static String unparseXMLfromCommandHashMap(Commands type, HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
