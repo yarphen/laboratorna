@@ -1,8 +1,23 @@
 package com.sheremet.utils;
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import javax.lang.model.element.Element;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.traversal.NodeFilter;
 
 public class Parser {
 	
@@ -33,7 +48,16 @@ public class Parser {
 
 
 	public static String unparseXMLfromCommandHashMap(Commands type, HashMap<String, Object> map) {
-		
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+        	DocumentBuilder db = dbf.newDocumentBuilder();
+        	Document document = db.newDocument();
+//        	document.
+        	Element element 
+        	
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		return null;
 	}
 
