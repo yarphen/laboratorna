@@ -18,6 +18,12 @@ import com.sheremet.utils.*;
 public class DBDirectAPI {
 	private static final String FILENAME = "";
 	private Connection con;
+	public static final int BRATCHYKSALLBYPATRON = 0;
+	public static final int BRATCHYKSACTIVEBYID = 1;
+	public static final int BRATCHYKSALLBYID = 2;
+	public static final int USERSBYLOGIN = 3;
+	public static final int USERSBYID = 4;
+	public static final int USERSALL = 5;
 	public DBDirectAPI() {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -32,55 +38,51 @@ public class DBDirectAPI {
 			e.printStackTrace();
 		}
 	}
-	private long generateID() {
+	public long generateID() {
 		long l = System.currentTimeMillis();
 		l = l%1000000000000L;
 		l=l*1000;
 		l=l+(int)(Math.random()*1000+0.5);
 		return l;
 	}
-	private Bratchyk currentBratchyk(ResultSet set){
+	public Bratchyk currentBratchyk(ResultSet set){
+		return null;
 		
 	}
-	private Bratchyk currentUser(ResultSet set){
+	public User currentUser(ResultSet set){
+		return null;
 		
 	}
-	private Bratchyk setUser(PreparedStatement st, boolean setId){
+	public boolean addVersion(Bratchyk version){
+		return false;
 		
 	}
-	private void setBratchyk(Bratchyk bratchyk, boolean setId, boolean active) throws SQLException{
-		PreparedStatement statement;
-		if (setId){
-			statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		}else{
-			statement = con.prepareStatement("INSERT INTO 'bratchyk' (dataankety,datanarodzhennia,dataopatronennia,dataposhanuvannia,datavysviaty,imya,kontakty,patron_id,prizvysche,pobatkovi,posady,rikvstupu,rikvypusku,specialnist,version_id, nodetype) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		}
-		statement.setDate(1, bratchyk.dataankety);
-		statement.setDate(2, bratchyk.datanarodzhennia);
-		statement.setDate(3, bratchyk.dataopatronennia);
-		statement.setDate(4, bratchyk.dataposhanuvannia);
-		statement.setDate(5, bratchyk.datavysviaty);
-		statement.setString(6, bratchyk.imya);
-		statement.setString(7, bratchyk.kontakty);
-		statement.setLong(8, bratchyk.patron_id);
-		statement.setString(9, bratchyk.prizvysche);
-		statement.setString(10, bratchyk.pobatkovi);
-		statement.setString(11, bratchyk.posady);
-		statement.setInt(12, bratchyk.rikvstupu);
-		statement.setInt(13, bratchyk.rikvypusku);
-		statement.setString(14, bratchyk.specialnist);
-		statement.setLong(15, System.currentTimeMillis());
-		if (active){
-			statement.setInt(17, 1);
-		}else{
-			statement.setInt(17, 0);
-		}
-		if (active){
-			statement.setInt(17, 1);
-		}else{
-			statement.setInt(17, 0);
-		}
-		statement.execute();
-		statement.close();
+	public boolean delVersion(long id, long version_id){
+		return false;
+		
+	}
+	public boolean disableVersion(long id){
+		return false;
+		
+	}
+	public boolean addUser(User user){
+		return false;
+		
+	}
+	public boolean delUser(long id){
+		return false;
+		
+	}
+	public boolean setUser(User user){
+		return false;
+		
+	}
+	public ResultSet getUserSet(Long id, String login, int mode){
+		return null;
+		
+	}
+	public ResultSet getBratchykSet(Long id, int mode){
+		return null;
+		
 	}
 }
