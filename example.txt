@@ -1,18 +1,25 @@
-act="login"\login="qwerty"\password="empty"
-
-java.util.Date 01/02/2013
-java.lang.String "jyfuyfyf7689"
-java.lang.Long 12415143636368005
-java.lang.Integer 1241515
-java.lang.Boolean true
-java.lang.Boolean false
-
-String s = "act=\"login\"\\login=\"qwerty\"\\password=\"empty\"";
-String [] array = s.split(Pattern.quote("\\"));
-String temp = array[0];
-
-java.lang.String
-java.lang.Integer
-java.lang.Boolean
-java.util.Date
-java.sql.Date
+<?xml version="1.0" encoding="UTF-8"?>
+<command>
+	<type>setBratchyk</type>
+	<args>
+		<arg name="bratchyk" type="Bratchyk">
+				<element name="dataankety" value="" type="date"/>
+				<element name="datanarodzhennia" type="date"/>
+				<element name="dataopatronennia" type="date"/>
+				<element name="dataposhanuvannia" type="date"/>
+				<element name="datavysviaty" type="date"/>
+				<element name="id" type="long"/>
+				<element name="imya" type="string"/>
+				<element name="kontakty" type="string"/>
+				<element name="patron_id" type="integer"/>
+				<element name="prizvysche" type="string"/>
+				<element name="pobatkovi" type="string"/>
+				<element name="posady" type="string"/>
+				<element name="rikvstupu" type="integer"/>
+				<element name="rikvypusku" type="integer"/>
+				<element name="specialnist" type="string"/>
+				<element name="version_id" type="integer"/>
+		</arg>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>				
