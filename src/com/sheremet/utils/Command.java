@@ -3,36 +3,52 @@ package com.sheremet.utils;
 import java.util.HashMap;
 
 public class Command {
-
+	private Commands type;
+	private HashMap map;
 
 	public Command(HashMap<String, Object> map) throws Exception {
 		String commandtype = (String) map.get("act");
 		switch (commandtype) {
-		case 	"value":
-		case 	"login":
-		case	"getBratchykChildren":
-		case	"getHeadBratchyks":
-		case	"getBratchyk":
-		case	"getBratchykHistory":
-		case	"getUserList":
-		case	"getUser":
-		case	"setBratchyk":
-		case	"setUser":
-		case	"addUser":
-		case	"addBratchyk":
-		case	"deleteBratchyk":
-		case	"deleteBratchykHistory":
-		case	"deleteUser":
-			break;
-
+		case 	"regRequest": type = Commands.regRequest;break;
+		case 	"login": type = Commands.login;break;
+		case	"getBratchykChildren":type = Commands.getBratchykChildren;break;
+		case	"getHeadBratchyks":type = Commands.getHeadBratchyks;break;
+		case	"getBratchyk":type = Commands.getBratchyk;break;
+		case	"getBratchykHistory":type = Commands.getBratchykHistory;break;
+		case	"getUserList":type = Commands.getUserList;break;
+		case	"getUser":type = Commands.getUser;break;
+		case	"setBratchyk":type = Commands.setBratchyk;break;
+		case	"setUser":type = Commands.setUser;break;
+		case	"addUser":type = Commands.addUser;break;
+		case	"addBratchyk":type = Commands.addBratchyk;break;
+		case	"deleteBratchyk":type = Commands.deleteBratchyk;break;
+		case	"deleteBratchykHistory":type = Commands.deleteBratchykHistory;break;
+		case	"deleteUser":type = Commands.deleteUser;break;
 		default:
-			throw new Exception();
+			throw new Exception("Incorrect command: "+commandtype);
 		}
+		this.map=map;
 	}
 
-	public Object execute(boolean cacheble) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object send(boolean cacheble) {
+		switch (type ) {
+		case 	regRequest: {} break;
+		case 	login: {} break;
+		case	getBratchykChildren:{} break;
+		case	getHeadBratchyks:{} break;
+		case	getBratchyk:{} break;
+		case	getBratchykHistory:{}break;
+		case	getUserList:{}break;
+		case	getUser:{}break;
+		case	setBratchyk:{}break;
+		case	setUser:{}break;
+		case	addUser:{}break;
+		case	addBratchyk:{}break;
+		case	deleteBratchyk:{}break;
+		case	deleteBratchykHistory:{}break;
+		case	deleteUser:{}break;
+		}
+		return false;
 	}
 
 }
