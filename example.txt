@@ -24,9 +24,17 @@
 	</args>
 </command>			
 
+
 <command>
 	<type>getBratchykChildren</type>
 	<args>
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>			
+
+
+<command>
+	<type>getHeadBratchyks</type>
+	<args>
+	</args>
+</command>	
