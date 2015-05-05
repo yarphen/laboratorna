@@ -51,3 +51,9 @@
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>		
+
+<command>
+	<type>getUserList</type>
+	<args>
+	</args>
+</command>	
