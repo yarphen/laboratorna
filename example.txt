@@ -38,11 +38,13 @@
 	</args>
 </command>	
 
+
 <command>
 	<type>getBratchyk</type>
 	<args>
 	</args>
 </command>		
+
 
 <command>
 	<type>getBratchykHistory</type>
@@ -51,11 +53,13 @@
 	</args>
 </command>		
 
+
 <command>
 	<type>getUserList</type>
 	<args>
 	</args>
 </command>	
+
 
 <command>
 	<type>getUser</type>
@@ -63,6 +67,7 @@
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>	
+
 
 <command>
 	<type>setUser</type>
@@ -76,6 +81,7 @@
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>	
+
 		
 <command>
 	<type>addUser</type>
@@ -85,5 +91,52 @@
 			<element name="passhash" value="" type="string"/>
 			<element name="permission" value="" type="integer"/>
 			<element name="id" value="" type="long"/>
+</command>
+
+
+<command>
+	<type>addBratchyk</type>
+		<arg name="bratchyk" value="" type="Bratchyk">
+			<element name="dataankety" value="" type="date"/>
+			<element name="datanarodzhennia" value="" type="date"/>
+			<element name="dataopatronennia" value="" type="date"/>
+			<element name="dataposhanuvannia" value="" type="date"/>
+			<element name="datavysviaty" value="" type="date"/>
+			<element name="id" value="" type="long"/>
+			<element name="imya" value="" type="string"/>
+			<element name="kontakty" value="" type="string"/>
+			<element name="patron_id" value="" type="integer"/>
+			<element name="prizvysche" value="" type="string"/>
+			<element name="pobatkovi" value="" type="string"/>
+			<element name="posady" value="" type="string"/>
+			<element name="rikvstupu" value="" type="integer"/>
+			<element name="rikvypusku" value="" type="integer"/>
+			<element name="specialnist" value="" type="string"/>
+			<element name="version_id" value="" type="integer"/>
+		</args>
 </command>			
+
 			
+<command>
+	<type>deleteBratchyk</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>
+
+
+<command>
+	<type>deleteBratchykHistory</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+		<element name="part" value="" type="integer"/>
+	</args>
+</command>	
+
+
+<command>
+	<type>deleteUser</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>			
