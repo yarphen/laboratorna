@@ -9,6 +9,5 @@ public class TreeEditPanel extends JPanel{
 	private static final long serialVersionUID = -1599946953143492304L;
 
 	public TreeEditPanel(DBSecureAPI api) {
-		// TODO Auto-generated constructor stub
 	}
 }
