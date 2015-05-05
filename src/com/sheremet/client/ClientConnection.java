@@ -30,10 +30,16 @@ public class ClientConnection extends Thread{
 	public void send(String command, StringResultHandler handler){
 		//push command to queue
 		//notify this thread if it is sleeping 
+		command = to1line(command);
 		queue.add(new Node(command, handler));
 		synchronized (this) {
 			notify();
 		}
+	}
+	private static String to1line(String command) {
+		command=command.replace("\n", " ");
+		command=command.replace("\r", " ");
+		return command;
 	}
 	@Override
 	public void run() {
