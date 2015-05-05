@@ -57,3 +57,10 @@
 	<args>
 	</args>
 </command>	
+
+<command>
+	<type>getUser</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>	
