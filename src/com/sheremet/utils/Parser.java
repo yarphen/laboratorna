@@ -56,12 +56,21 @@ public class Parser {
 	}
 
 
-	public static String unparseXMLstring(Commands type, HashMap map) {
+	public static String unparseXMLfromCommandHashMap(Commands type, HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static Object parserXMLstring(String s) {
+	public static Object parseXMLtoResultObject(String s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public static String unparseXMLfromResultObject(Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static HashMap<String, Object> parseXMLtoCommandHashMap(String string) {
 		// TODO Auto-generated method stub
 		return null;
 	}

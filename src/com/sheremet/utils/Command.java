@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.sheremet.client.ClientConnection;
 import com.sheremet.client.StringResultHandler;
+import com.sheremet.server.DBWrappedAPI;
 
 public class Command {
 	private Commands type;
@@ -34,13 +35,13 @@ public class Command {
 	}
 
 	public Object send(final ClientConnection connection) {
-		String str = Parser.unparseXMLstring(type, map);
+		String str = Parser.unparseXMLfromCommandHashMap(type, map);
 		final Result result = new Result();
 		connection.send(str, new StringResultHandler() {
-			
+
 			@Override
 			public void handle(String s) throws Exception {
-				result.setValue(Parser.parserXMLstring(s));
+				result.setValue(Parser.parseXMLtoResultObject(s));
 				synchronized (connection) {
 					connection.notifyAll();
 				}
@@ -51,8 +52,14 @@ public class Command {
 				connection.wait();
 			}
 		} catch (InterruptedException e) {}
-		
+
 		return result.getValue();
+	}
+
+	public Object execute(DBWrappedAPI api) {
+		return null;
+		// TODO Auto-generated method stub
+
 	}
 
 }
