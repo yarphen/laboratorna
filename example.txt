@@ -109,3 +109,9 @@
 		</args>
 </command>			
 			
+<command>
+	<type>deleteBratchyk</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>				
