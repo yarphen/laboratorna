@@ -2,6 +2,8 @@ package com.sheremet.utils;
 
 import java.util.HashMap;
 
+import com.sheremet.client.ClientConnection;
+
 public class Command {
 	private Commands type;
 	private HashMap map;
@@ -30,24 +32,8 @@ public class Command {
 		this.map=map;
 	}
 
-	public Object send(boolean cacheble) {
-		switch (type ) {
-		case 	regRequest: {} break;
-		case 	login: {} break;
-		case	getBratchykChildren:{} break;
-		case	getHeadBratchyks:{} break;
-		case	getBratchyk:{} break;
-		case	getBratchykHistory:{}break;
-		case	getUserList:{}break;
-		case	getUser:{}break;
-		case	setBratchyk:{}break;
-		case	setUser:{}break;
-		case	addUser:{}break;
-		case	addBratchyk:{}break;
-		case	deleteBratchyk:{}break;
-		case	deleteBratchykHistory:{}break;
-		case	deleteUser:{}break;
-		}
+	public Object send(ClientConnection connection) {
+		
 		return false;
 	}
 

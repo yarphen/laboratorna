@@ -1,10 +1,12 @@
 package com.sheremet.client;
 
 import java.net.ConnectException;
-import java.sql.Date;
 import java.util.HashMap;
 
-import com.sheremet.utils.*;
+import com.sheremet.utils.Bratchyk;
+import com.sheremet.utils.Command;
+import com.sheremet.utils.Parser;
+import com.sheremet.utils.User;
 
 public class DBSecureAPI {
 	private String access_token;
@@ -39,7 +41,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 	public String login(String login, String password){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -52,7 +54,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (String) command.send(false);
+		return (String) command.send(connection);
 	}
 	public Bratchyk[] getBratchykChildren(long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -65,7 +67,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk[]) command.send(true);
+		return (Bratchyk[]) command.send(connection);
 	}
 	public Bratchyk[] getHeadBratchyks(){		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -77,7 +79,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk[]) command.send(true);
+		return (Bratchyk[]) command.send(connection);
 	}
 	public Bratchyk getBratchyk(long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -90,7 +92,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk) command.send(true);
+		return (Bratchyk) command.send(connection);
 	}
 	public Bratchyk[] getBratchykHistory(long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -103,7 +105,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk[]) command.send(true);
+		return (Bratchyk[]) command.send(connection);
 	}
 	public User[] getUserList(){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -115,7 +117,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (User[]) command.send(true);
+		return (User[]) command.send(connection);
 	}
 	public User getUser(long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -128,7 +130,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (User) command.send(true);
+		return (User) command.send(connection);
 	}
 	public boolean setBratchyk(Bratchyk bratchyk, long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -142,7 +144,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 	public boolean setUser(User user, long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -156,7 +158,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 	public boolean addUser(User user){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -169,7 +171,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 	public boolean addBratchyk(Bratchyk bratchyk){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -182,7 +184,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 	public boolean deleteBratchyk(long id) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -195,7 +197,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 	public boolean deleteBratchykHistory(long id, int part) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -209,7 +211,7 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 	public boolean deleteUser(long id) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -220,10 +222,9 @@ public class DBSecureAPI {
 		try {
 			command = new Command(map);
 		} catch (Exception e) {
-
 			return false;
 		}
-		return (Boolean) command.send(false);
+		return (Boolean) command.send(connection);
 	}
 }
 
