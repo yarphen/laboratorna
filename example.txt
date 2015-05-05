@@ -44,3 +44,10 @@
 	<args>
 	</args>
 </command>		
+
+<command>
+	<type>getBratchykHistory</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>		
