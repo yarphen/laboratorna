@@ -38,11 +38,13 @@
 	</args>
 </command>	
 
+
 <command>
 	<type>getBratchyk</type>
 	<args>
 	</args>
 </command>		
+
 
 <command>
 	<type>getBratchykHistory</type>
@@ -51,11 +53,13 @@
 	</args>
 </command>		
 
+
 <command>
 	<type>getUserList</type>
 	<args>
 	</args>
 </command>	
+
 
 <command>
 	<type>getUser</type>
@@ -63,6 +67,7 @@
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>	
+
 
 <command>
 	<type>setUser</type>
@@ -76,6 +81,7 @@
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>	
+
 		
 <command>
 	<type>addUser</type>
@@ -86,6 +92,7 @@
 			<element name="permission" value="" type="integer"/>
 			<element name="id" value="" type="long"/>
 </command>
+
 
 <command>
 	<type>addBratchyk</type>
@@ -108,10 +115,21 @@
 			<element name="version_id" value="" type="integer"/>
 		</args>
 </command>			
+
 			
 <command>
 	<type>deleteBratchyk</type>
 	<args>
 		<arg name="id" value="" type="long"/>
 	</args>
+</command>
+
+
+<command>
+	<type>deleteBratchykHistory</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+		<element name="part" value="" type="integer"/>
+	</args>
+</command>	
 </command>				
