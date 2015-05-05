@@ -22,4 +22,11 @@
 		</arg>
 		<arg name="id" value="" type="long"/>
 	</args>
-</command>				
+</command>			
+
+<command>
+	<type>getBratchykChildren</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>			
