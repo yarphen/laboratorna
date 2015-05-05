@@ -132,4 +132,11 @@
 		<element name="part" value="" type="integer"/>
 	</args>
 </command>	
-</command>				
+
+
+<command>
+	<type>deleteUser</type>
+	<args>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>			
