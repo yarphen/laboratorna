@@ -77,3 +77,13 @@
 	</args>
 </command>	
 		
+<command>
+	<type>addUser</type>
+		<arg name="user" value="" type="User">
+			<element name="name" value="" type="string"/>
+			<element name="email" value="" type="string"/>
+			<element name="passhash" value="" type="string"/>
+			<element name="permission" value="" type="integer"/>
+			<element name="id" value="" type="long"/>
+</command>			
+			
