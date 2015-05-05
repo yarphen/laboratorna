@@ -38,3 +38,9 @@
 	<args>
 	</args>
 </command>	
+
+<command>
+	<type>getBratchyk</type>
+	<args>
+	</args>
+</command>		
