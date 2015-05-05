@@ -2,24 +2,23 @@
 <command>
 	<type>setBratchyk</type>
 	<args>
-		<arg name="bratchyk" type="Bratchyk">
-				<element name="dataankety" value="" type="date"/>
-				<element name="datanarodzhennia" type="date"/>
-				<element name="dataopatronennia" type="date"/>
-				<element name="dataposhanuvannia" type="date"/>
-				<element name="datavysviaty" type="date"/>
-				<element name="id" type="long"/>
-				<element name="imya" type="string"/>
-				<element name="kontakty" type="string"/>
-				<element name="patron_id" type="integer"/>
-				<element name="prizvysche" type="string"/>
-				<element name="pobatkovi" type="string"/>
-				<element name="posady" type="string"/>
-				<element name="rikvstupu" type="integer"/>
-				<element name="rikvypusku" type="integer"/>
-				<element name="specialnist" type="string"/>
-				<element name="version_id" type="integer"/>
-		</arg>
+		<arg name="bratchyk" value="" type="Bratchyk">
+			<element name="dataankety" value="" type="date"/>
+			<element name="datanarodzhennia" value="" type="date"/>
+			<element name="dataopatronennia" value="" type="date"/>
+			<element name="dataposhanuvannia" value="" type="date"/>
+			<element name="datavysviaty" value="" type="date"/>
+			<element name="id" value="" type="long"/>
+			<element name="imya" value="" type="string"/>
+			<element name="kontakty" value="" type="string"/>
+			<element name="patron_id" value="" type="integer"/>
+			<element name="prizvysche" value="" type="string"/>
+			<element name="pobatkovi" value="" type="string"/>
+			<element name="posady" value="" type="string"/>
+			<element name="rikvstupu" value="" type="integer"/>
+			<element name="rikvypusku" value="" type="integer"/>
+			<element name="specialnist" value="" type="string"/>
+			<element name="version_id" value="" type="integer"/>
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>			
@@ -64,3 +63,17 @@
 		<arg name="id" value="" type="long"/>
 	</args>
 </command>	
+
+<command>
+	<type>setUser</type>
+	<args>
+		<arg name="user" value="" type="User">
+			<element name="name" value="" type="string"/>
+			<element name="email" value="" type="string"/>
+			<element name="passhash" value="" type="string"/>
+			<element name="permission" value="" type="integer"/>
+			<element name="id" value="" type="long"/>
+		<arg name="id" value="" type="long"/>
+	</args>
+</command>	
+		
