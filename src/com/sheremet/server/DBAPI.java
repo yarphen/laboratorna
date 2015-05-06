@@ -1,5 +1,8 @@
 package com.sheremet.server;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -102,7 +105,7 @@ public class DBAPI {
 		} catch (SQLException e) {}
 		return user;
 	}
-	
+
 	public boolean addBratchyk(Bratchyk bratchyk){
 		bratchyk.id = generateID();
 		return addVersion(bratchyk);
@@ -174,12 +177,14 @@ public class DBAPI {
 	}
 	//is using just in manager, not int commands
 	Integer getPermissionOfTheToken(String access_token){
+		if (access_token.isEmpty())
+			return Permissions.GUEST;
 		try{
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM users WHERE token="+access_token);
 			ResultSet set = statement.executeQuery();
 			return getUser(set.getLong("user_id")).permission;
 		}catch (SQLException e){
-			return null;
+			return Permissions.GUEST;
 		}
 	}
 	//is using for login operation, not sending directly
@@ -344,5 +349,38 @@ public class DBAPI {
 			return null;
 		}
 	}
+	public static String md5(String st) {
+		MessageDigest messageDigest = null;
+		byte[] digest = new byte[0];
 
+		try {
+			messageDigest = MessageDigest.getInstance("MD5");
+			messageDigest.reset();
+			messageDigest.update(st.getBytes());
+			digest = messageDigest.digest();
+		} catch (NoSuchAlgorithmException e) {
+			// тут можно обработать ошибку
+			// возникает она если в передаваемый алгоритм в getInstance(,,,) не существует
+			e.printStackTrace();
+		}
+
+		BigInteger bigInt = new BigInteger(1, digest);
+		String md5Hex = bigInt.toString(16);
+
+		while( md5Hex.length() < 32 ){
+			md5Hex = "0" + md5Hex;
+		}
+
+		return md5Hex;
+	}
+	public static String generateToken(String material) {
+		String token = "";
+		for (int i=0; i<3; i++){
+			material+=System.currentTimeMillis()+Math.random();
+			token+= md5(material);
+			material+=token;
+		}
+		return token;
+		
+	}
 }
