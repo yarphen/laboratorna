@@ -1,6 +1,8 @@
 package com.sheremet.client;
 
 import java.net.ConnectException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import com.sheremet.utils.Bratchyk;
@@ -218,6 +220,20 @@ public class DBSecureAPI {
 		map.put("act", "deleteUser");
 		map.put("access_token", access_token);
 		map.put("id", id);
+		Command command;
+		try {
+			command = new Command(map);
+		} catch (Exception e) {
+			return false;
+		}
+		return (Boolean) command.send(connection);
+	}
+	public boolean setUserPermission(long id, int permission){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("act", "setUserPermission");
+		map.put("access_token", access_token);
+		map.put("id", id);
+		map.put("permission", permission);
 		Command command;
 		try {
 			command = new Command(map);

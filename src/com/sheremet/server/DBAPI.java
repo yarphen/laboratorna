@@ -102,16 +102,7 @@ public class DBAPI {
 		} catch (SQLException e) {}
 		return user;
 	}
-	public User getUser(String login){
-		User user = null;
-		ResultSet set = getUserSet(null, login, USERSBYLOGIN);
-		try {
-			if(set.next()){
-				user= currentUser(set);
-			}
-		} catch (SQLException e) {}
-		return user;
-	}
+	
 	public boolean addBratchyk(Bratchyk bratchyk){
 		bratchyk.id = generateID();
 		return addVersion(bratchyk);
@@ -121,37 +112,6 @@ public class DBAPI {
 	}
 	public boolean deleteBratchykHistory(long id, long part ) {
 		return delVersion(id, part);
-	}
-	public boolean addAccessToken(Long user_id, String access_token){
-		try{
-			PreparedStatement statement = con.prepareStatement("INSERT INTO 'tokens' VALUES(?, ?)");
-			statement.setLong(1, user_id);
-			statement.setString(2, access_token);
-			statement.execute();
-			statement.close();
-
-		}catch (SQLException e){
-			return false;
-		}
-		return true;
-	}
-	public boolean delAccessToken(String access_token){
-		try{
-			PreparedStatement statement = con.prepareStatement("DELETE FROM 'tokens' WHERE token="+access_token);
-			statement.execute();
-			return true;
-		}catch (SQLException e){
-			return false;
-		}
-	}
-	public Integer getPermissionOfTheToken(String access_token){
-		try{
-			PreparedStatement statement = con.prepareStatement("SELECT * FROM users WHERE token="+access_token);
-			ResultSet set = statement.executeQuery();
-			return getUser(set.getLong("user_id")).permission;
-		}catch (SQLException e){
-			return null;
-		}
 	}
 
 	public boolean addUser(User user){
@@ -181,19 +141,71 @@ public class DBAPI {
 	}
 	public boolean setUser(User user, long id){
 		try{
-			PreparedStatement statement = con.prepareStatement("UPDATE students SET email = ?, name = ?, passhash = ?, permission=? WHERE id=" + id);
+			PreparedStatement statement = con.prepareStatement("UPDATE students SET email = ?, name = ?, passhash = ? WHERE id=" + id);
 			statement.setString(1, user.email);
 			statement.setString(2, user.name);
 			statement.setString(3, user.passhash);
-			statement.setInt(4, user.permission);
 			statement.execute();
 			return true;
 		}catch (SQLException e){
 			return false;
 		}
 	}
+	public boolean setUserPermission(long user_id, int permission){
+		try{
+			PreparedStatement statement = con.prepareStatement("UPDATE students SET permission=? WHERE id=" + user_id);
+			statement.setInt(1,permission);
+			statement.execute();
+			return true;
+		}catch (SQLException e){
+			return false;
+		}
+	}
+	//is using for login operation, not sending directly
+	User getUser(String login){
+		User user = null;
+		ResultSet set = getUserSet(null, login, USERSBYLOGIN);
+		try {
+			if(set.next()){
+				user= currentUser(set);
+			}
+		} catch (SQLException e) {}
+		return user;
+	}
+	//is using just in manager, not int commands
+	Integer getPermissionOfTheToken(String access_token){
+		try{
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM users WHERE token="+access_token);
+			ResultSet set = statement.executeQuery();
+			return getUser(set.getLong("user_id")).permission;
+		}catch (SQLException e){
+			return null;
+		}
+	}
+	//is using for login operation, not sending directly
+	boolean addAccessToken(Long user_id, String access_token){
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'tokens' VALUES(?, ?)");
+			statement.setLong(1, user_id);
+			statement.setString(2, access_token);
+			statement.execute();
+			statement.close();
 
-
+		}catch (SQLException e){
+			return false;
+		}
+		return true;
+	}
+	//is using for logout operation, not sending directly
+	boolean delAccessToken(String access_token){
+		try{
+			PreparedStatement statement = con.prepareStatement("DELETE FROM 'tokens' WHERE token="+access_token);
+			statement.execute();
+			return true;
+		}catch (SQLException e){
+			return false;
+		}
+	}
 	private long generateID() {
 		long l = System.currentTimeMillis();
 		l = l%1000000000000L;
