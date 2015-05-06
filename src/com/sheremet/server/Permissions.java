@@ -28,7 +28,7 @@ public class Permissions{
 		map.put(Commands.setBratchyk, ADMIN);
 		map.put(Commands.setUser, AUTHORIZEDUSER);
 	}
-	public Integer get(Object key) {
+	public static Integer get(Object key) {
 		return map.get(key);
 	}
 	
