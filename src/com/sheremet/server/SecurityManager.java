@@ -3,15 +3,19 @@ package com.sheremet.server;
 import java.util.HashMap;
 
 import com.sheremet.utils.Bratchyk;
+import com.sheremet.utils.Command;
 import com.sheremet.utils.User;
 
 public class SecurityManager {
-	DBWrappedAPI api;
-	public SecurityManager() {
+	DBAPI api;
+	public SecurityManager(DBAPI dbapi) {
 		// load database
 		// and init
+		api = dbapi;
 	}
-	public boolean tryToDo(HashMap<String, Object> command){
+	public Object tryToDo(Command command){
+		int permission = api.getPermissionOfTheToken((String) command.getMapElement("access_token"));
+		
 		return true;
 	}
 	public User filtrateUser(User u) {

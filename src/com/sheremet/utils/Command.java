@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 import com.sheremet.client.ClientConnection;
 import com.sheremet.client.StringResultHandler;
-import com.sheremet.server.DBWrappedAPI;
+import com.sheremet.server.DBAPI;
 
 public class Command {
 	private Commands type;
-	private HashMap map;
+	private HashMap<String, Object> map;
 
 	public Command(HashMap<String, Object> map) throws Exception {
 		String commandtype = (String) map.get("act");
@@ -56,10 +56,19 @@ public class Command {
 		return result.getValue();
 	}
 
-	public Object execute(DBWrappedAPI api) {
+	public Object execute(com.sheremet.server.SecurityManager manager) {
 		return null;
 		// TODO Auto-generated method stub
 
+	}
+
+
+	public Object getMapElement(Object key) {
+		return map.get(key);
+	}
+
+	public Commands getType() {
+		return type;
 	}
 
 }
