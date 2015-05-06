@@ -19,6 +19,7 @@ public class Bratchyk {
 		datanarodzhennia = b.datanarodzhennia;
 		dataopatronennia = b.dataopatronennia;
 		dataposhanuvannia = b.dataposhanuvannia;
+		dataversii=b.dataversii;
 		datavysviaty = b.datavysviaty;
 		id = b.id;
 		imya = b.imya;
@@ -39,19 +40,20 @@ public class Bratchyk {
 	public Date datanarodzhennia;//private
 	public Date dataopatronennia;
 	public Date dataposhanuvannia;
+	public Date dataversii;//private
 	public Date datavysviaty;//private
 	public Long id;
 	public String imya;
 	public String kontakty;//private
-	public Integer patron_id;
+	public Long patron_id;
 	public String prizvysche;
 	public String pobatkovi;
 	public String posady;
 	public Integer rikvstupu;
 	public Integer rikvypusku;
 	public String specialnist;
-	public Integer version_id;//private
-	public void makeCopy(Bratchyk bratchyk) {
+	public Long version_id;//private
+	private void makeCopy(Bratchyk bratchyk) {
 		// TODO Auto-generated method stub
 		
 	}
