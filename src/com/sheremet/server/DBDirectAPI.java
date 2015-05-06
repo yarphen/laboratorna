@@ -46,43 +46,172 @@ public class DBDirectAPI {
 		return l;
 	}
 	public Bratchyk currentBratchyk(ResultSet set){
-		return null;
-		
+		try{
+			Bratchyk bratchyk = new Bratchyk();
+			bratchyk.dataankety = set.getDate("dataankety");
+			bratchyk.datanarodzhennia = set.getDate("datanarodzhennia");
+			bratchyk.dataopatronennia = set.getDate("dataopatronennia");
+			bratchyk.dataposhanuvannia = set.getDate("dataposhanuvannia");
+			bratchyk.dataversii = set.getDate("dataversii");
+			bratchyk.datavysviaty = set.getDate("datavysviaty");
+			bratchyk.id = set.getLong("id");
+			bratchyk.imya = set.getString("imya");
+			bratchyk.kontakty = set.getString("kontakty");
+			bratchyk.patron_id = set.getLong("patron_id");
+			bratchyk.pobatkovi = set.getString("pobatkovi");
+			bratchyk.posady = set.getString("posady");
+			bratchyk.prizvysche = set.getString("prizvysche");
+			bratchyk.rikvstupu = set.getInt("rikvstupu");
+			bratchyk.rikvypusku = set.getInt("rikvypusku");
+			bratchyk.specialnist = set.getString("specialnist");
+			bratchyk.version_id = set.getLong("version_id");
+			return bratchyk;
+		}catch (SQLException e){
+			return null;
+		}
+
 	}
 	public User currentUser(ResultSet set){
-		return null;
-		
+		try{
+			User user = new User();
+			user.name = set.getString("name");
+			user.email = set.getString("email");
+			user.passhash = set.getString("passhash");
+			user.permission = set.getInt("permission");
+			user.id = set.getLong("id");
+			return user;
+		}catch (SQLException e){
+			return null;
+		}
 	}
 	public boolean addVersion(Bratchyk version){
-		return false;
-		
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyky' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			statement.setDate(1, version.dataankety);
+			statement.setDate(2, version.datanarodzhennia);
+			statement.setDate(3, version.dataopatronennia);
+			statement.setDate(4, version.dataposhanuvannia);
+			statement.setDate(5, version.dataversii);
+			statement.setDate(6, version.datavysviaty);
+			statement.setLong(7, version.id);
+			statement.setString(8, version.imya);
+			statement.setString(9, version.kontakty);
+			statement.setLong(10, version.patron_id);
+			statement.setString(11, version.pobatkovi);
+			statement.setString(12, version.posady);
+			statement.setString(13, version.prizvysche);
+			statement.setInt(14, version.rikvstupu);
+			statement.setInt(15, version.rikvypusku);
+			statement.setString(16, version.specialnist);
+			statement.setLong(17, version.version_id);
+			statement.execute();
+			statement.close();
+		}catch (SQLException e){
+			return false;
+		}
+		return true;
 	}
 	public boolean delVersion(long id, long version_id){
-		return false;
-		
+		try{
+			PreparedStatement statement = con.prepareStatement("DELETE FROM 'teachers' WHERE version_id="+version_id+" AND id="+id);
+			statement.execute();
+			return true;
+		}catch (SQLException e){
+			return false;
+		}
 	}
 	public boolean disableVersion(long id){
-		return false;
-		
+		try{
+			PreparedStatement statement = con.prepareStatement("UPDATE bratshyky SET actual = 0 WHERE actual=1 AND id=" + id);
+			statement.execute();
+			return true;
+		}catch (SQLException e){
+			return false;
+		}
 	}
 	public boolean addUser(User user){
-		return false;
-		
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'users' VALUES(?, ?, ?, ?, ?, ?)");
+			statement.setString(1, user.email);
+			statement.setString(2, user.name);
+			statement.setLong(3, user.id);
+			statement.setString(4, user.passhash);
+			statement.setInt(5, user.permission);
+			statement.execute();
+			statement.close();
+			
+		}catch (SQLException e){
+			return false;
+		}
+		return true;
 	}
 	public boolean delUser(long id){
-		return false;
-		
+		try{
+			PreparedStatement statement = con.prepareStatement("DELETE FROM 'users' WHERE id="+id);
+			statement.execute();
+			return true;
+		}catch (SQLException e){
+			return false;
+		}
 	}
 	public boolean setUser(User user){
-		return false;
-		
+		try{
+			PreparedStatement statement = con.prepareStatement("UPDATE students SET email = ?, name = ?, passhash = ?, permission=? WHERE id=" + user.id);
+			statement.setString(1, user.email);
+			statement.setString(2, user.name);
+			statement.setString(3, user.passhash);
+			statement.setInt(4, user.permission);
+			statement.execute();
+			return true;
+		}catch (SQLException e){
+			return false;
+		}
 	}
-	public ResultSet getUserSet(Long id, String login, int mode){
-		return null;
-		
+	public ResultSet getUserSet(Long id, String email, int mode){
+		String query;
+		try{
+			switch (mode) {
+			case USERSALL:
+				query = "SELECT * FROM users";
+				break;
+			case USERSBYID:
+				query = "SELECT * FROM users WHERE id = "+id;
+				break;
+			case USERSBYLOGIN:
+				query = "SELECT * FROM users WHERE email = '"+email+"'";
+				break;
+			default:
+				throw new IllegalArgumentException();
+			}
+			PreparedStatement statement = con.prepareStatement(query);
+			ResultSet set = statement.executeQuery();
+			return set;
+		}catch (Exception e){
+			return null;
+		}
 	}
 	public ResultSet getBratchykSet(Long id, int mode){
-		return null;
-		
+		String query;
+		try{
+			switch (mode) {
+			case BRATCHYKSACTIVEBYID:
+				query = "SELECT * FROM bratchyky WHERE actual=1 AND id = "+id;
+				break;
+			case BRATCHYKSALLBYID:
+				query = "SELECT * FROM bratchyky WHERE id = "+id;
+				break;
+			case BRATCHYKSALLBYPATRON:
+				query = "SELECT * FROM bratchyky WHERE patron_id = "+id;
+				break;
+			default:
+				throw new IllegalArgumentException();
+			}
+			PreparedStatement statement = con.prepareStatement(query);
+			ResultSet set = statement.executeQuery();
+			return set;
+		}catch (Exception e){
+			return null;
+		}
 	}
+	
 }
