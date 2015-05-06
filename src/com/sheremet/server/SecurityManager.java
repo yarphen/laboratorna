@@ -8,15 +8,19 @@ import com.sheremet.utils.User;
 
 public class SecurityManager {
 	DBAPI api;
+	CommandExecutor commandExecutor;
 	public SecurityManager(DBAPI dbapi) {
 		// load database
 		// and init
 		api = dbapi;
+		commandExecutor = new CommandExecutor(api);
 	}
 	public Object tryToDo(Command command){
 		int permission = api.getPermissionOfTheToken((String) command.getMapElement("access_token"));
-		
-		return true;
+		if (Permissions.get(command.getType())<=permission){
+			return commandExecutor.execute(command);
+		}else 
+			return "Exception occured: illegal access";
 	}
 	public User filtrateUser(User u) {
 		u = new User(u);
