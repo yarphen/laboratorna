@@ -14,18 +14,19 @@ public class User {
 		}
 	}
 	public User() {
-		// TODO Auto-generated constructor stub
+
 	}
 	public User(User u) {
-		name = u.name;
 		email = u.email;
+		id = u.id;
+		name = u.name;
 		passhash = u.passhash;
 		permission = u.permission;
-		id = u.id;
 	}
-	public String name;
 	public String email;
+	public Long id;
+	public String name;
 	public String passhash;
 	public Integer permission;
-	public Long id;
+	
 }
