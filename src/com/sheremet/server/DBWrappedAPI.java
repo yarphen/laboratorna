@@ -111,4 +111,35 @@ public class DBWrappedAPI {
 	public boolean deleteUser(long id) {
 		return api.delUser(id);
 	}
+	public boolean addAccessToken(Long user_id, String access_token){
+		try{
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'tokens' VALUES(?, ?)");
+			statement.setLong(1, user_id);
+			statement.setString(2, access_token);
+			statement.execute();
+			statement.close();
+			
+		}catch (SQLException e){
+			return false;
+		}
+		return true;
+	}
+	public boolean delAccessToken(String access_token){
+		try{
+			PreparedStatement statement = con.prepareStatement("DELETE FROM 'tokens' WHERE token="+access_token);
+			statement.execute();
+			return true;
+		}catch (SQLException e){
+			return false;
+		}
+	}
+	public Integer getPermissionOfTheToken(String access_token){
+		try{
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM users WHERE token="+access_token);
+			ResultSet set = statement.executeQuery();
+			return getUser(set.getLong("user_id")).permission;
+		}catch (SQLException e){
+			return null;
+		}
+	}
 }
