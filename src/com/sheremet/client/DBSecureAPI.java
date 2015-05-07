@@ -13,25 +13,25 @@ import com.sheremet.utils.User;
 public class DBSecureAPI {
 	private String access_token;
 	private ClientConnection connection;
-	public DBSecureAPI(ClientConnection connection,  String login, String password) {
-//		this.connection = connection;
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		map.put("act", "login");
-//		map.put("login", login);
-//		map.put("password", password);
-//		String string  = Parser.unparse(map);
-//		connection.send(string, new StringResultHandler() {
-//
-//			@Override
-//			public void handle(String s) throws Exception {
-//				HashMap<String, Object> map = Parser.parse(s);
-//				if (map.get("success").equals("true")){
-//					access_token = (String) map.get("access_token");
-//				}else{
-//					throw new ConnectException("Cannot connect");
-//				}
-//			}
-//		});
+	public DBSecureAPI(ClientConnection connection) {
+		//		this.connection = connection;
+		//		HashMap<String, Object> map = new HashMap<String, Object>();
+		//		map.put("act", "login");
+		//		map.put("login", login);
+		//		map.put("password", password);
+		//		String string  = Parser.unparse(map);
+		//		connection.send(string, new StringResultHandler() {
+		//
+		//			@Override
+		//			public void handle(String s) throws Exception {
+		//				HashMap<String, Object> map = Parser.parse(s);
+		//				if (map.get("success").equals("true")){
+		//					access_token = (String) map.get("access_token");
+		//				}else{
+		//					throw new ConnectException("Cannot connect");
+		//				}
+		//			}
+		//		});
 	}
 	public boolean regRequest(String login){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -45,7 +45,7 @@ public class DBSecureAPI {
 		}
 		return (Boolean) command.send(connection);
 	}
-	public String login(String login, String password){
+	public boolean login(String login, String password){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "login");
 		map.put("login", login);
@@ -54,9 +54,10 @@ public class DBSecureAPI {
 		try {
 			command = new Command(map);
 		} catch (Exception e) {
-			return null;
+			return false;
 		}
-		return (String) command.send(connection);
+		access_token = (String) command.send(connection);
+		return true;
 	}
 	public Bratchyk[] getBratchykChildren(long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
