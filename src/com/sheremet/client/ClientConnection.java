@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -28,8 +29,7 @@ public class ClientConnection extends Thread{
 		scanner = new Scanner (socket.getInputStream());
 	}
 	public void send(String command, StringResultHandler handler){
-		//push command to queue
-		//notify this thread if it is sleeping 
+		
 		command = to1line(command);
 		queue.add(new Node(command, handler));
 		synchronized (this) {
@@ -69,6 +69,10 @@ public class ClientConnection extends Thread{
 				}
 			}
 		}
-		//		send all commands in infinite cicle to server and invoke StringResultHandler's method handle
+		
+	}
+	public static PreparedStatement prepeareStatement(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
