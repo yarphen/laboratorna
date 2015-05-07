@@ -383,4 +383,7 @@ public class DBAPI {
 		return token;
 		
 	}
+	public static void main(String[] args) {
+		System.out.println(generateToken("")); 
+	}
 }
