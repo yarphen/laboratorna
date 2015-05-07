@@ -10,6 +10,7 @@ public class ClientFrame extends JFrame{
 		// TODO Auto-generated constructor stub
 		this.connection=connection;
 		this.clientStarter=clientStarter;
+		private DBSecureAPI api;
 	}
 	public void showMessage(String s) {
 		// TODO Auto-generated method stub
@@ -17,7 +18,7 @@ public class ClientFrame extends JFrame{
 			 ClientFrame main=new ClientFrame(connection, clientStarter);
 			  main.setName("panelTabContent");
 			  this.add(main);
-			JPanel panel =new JPanel();
+			JPanel panel = new JPanel();
 			  Object Unit;
 			panel.getElement().getStyle().setBorderWidth(0,Unit.PX);
 			  panel.getElement().getStyle().setOverflow(Overflow.AUTO);
