@@ -19,7 +19,7 @@ import com.sheremet.utils.User;
 public class DBAPI {
 	private Connection con;
 	private static final String FILENAME = "";
-	public static final int BRATCHYKSALLBYPATRON = 0;
+	public static final int BRATCHYKSACTIVEBYPATRON = 0;
 	public static final int BRATCHYKSACTIVEBYID = 1;
 	public static final int BRATCHYKSALLBYID = 2;
 	public static final int USERSBYLOGIN = 3;
@@ -39,7 +39,7 @@ public class DBAPI {
 	}
 	public Bratchyk[] getChildrenList(long id){
 		LinkedList<Bratchyk> list = new LinkedList<>();
-		ResultSet set = getBratchykSet(id, BRATCHYKSALLBYPATRON);
+		ResultSet set = getBratchykSet(id, BRATCHYKSACTIVEBYPATRON);
 		try {
 			while(set.next()){
 				list.add(currentBratchyk(set));
@@ -50,7 +50,7 @@ public class DBAPI {
 	}
 	public Bratchyk[] getHeadBratchykList(){
 		LinkedList<Bratchyk> list = new LinkedList<>();
-		ResultSet set = getBratchykSet(null, BRATCHYKSALLBYPATRON);
+		ResultSet set = getBratchykSet(null, BRATCHYKSACTIVEBYPATRON);
 		try {
 			while(set.next()){
 				list.add(currentBratchyk(set));
@@ -71,7 +71,11 @@ public class DBAPI {
 	}
 	public boolean setBratchyk(Bratchyk bratchyk, long id){
 		bratchyk.id = id;
-		return addVersion(bratchyk);
+		try {
+			return addVersion(bratchyk);
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 	public Bratchyk[] getBratchykHistory(long id){
 		LinkedList<Bratchyk> list = new LinkedList<>();
@@ -108,7 +112,11 @@ public class DBAPI {
 
 	public boolean addBratchyk(Bratchyk bratchyk){
 		bratchyk.id = generateID();
-		return addVersion(bratchyk);
+		try {
+			return addVersion(bratchyk);
+		} catch (SQLException e) {
+			return false; 
+		}
 	}
 	public boolean deleteBratchyk(long id) {
 		return disableVersion(id);
@@ -257,7 +265,11 @@ public class DBAPI {
 			return null;
 		}
 	}
-	private boolean addVersion(Bratchyk version){
+	private boolean addVersion(Bratchyk version) throws SQLException{
+		if (version.patron_id!=null){
+			ResultSet resultSet = getBratchykSet(version.patron_id, BRATCHYKSACTIVEBYPATRON);
+			if (!resultSet.next()) return false;
+		}
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyky' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			statement.setDate(1, version.dataankety);
@@ -297,6 +309,12 @@ public class DBAPI {
 		try{
 			PreparedStatement statement = con.prepareStatement("UPDATE bratshyky SET actual = 0 WHERE actual=1 AND id=" + id);
 			statement.execute();
+			ResultSet resultSet = getBratchykSet(id, BRATCHYKSACTIVEBYPATRON);
+			while(resultSet.next()){
+				Bratchyk bratchyk = currentBratchyk(resultSet);
+				bratchyk.patron_id = null;
+				addVersion(bratchyk);
+			}
 			return true;
 		}catch (SQLException e){
 			return false;
@@ -336,7 +354,7 @@ public class DBAPI {
 			case BRATCHYKSALLBYID:
 				query = "SELECT * FROM bratchyky WHERE id = "+id;
 				break;
-			case BRATCHYKSALLBYPATRON:
+			case BRATCHYKSACTIVEBYPATRON:
 				query = "SELECT * FROM bratchyky WHERE patron_id = "+id;
 				break;
 			default:
@@ -381,7 +399,7 @@ public class DBAPI {
 			material+=token;
 		}
 		return token;
-		
+
 	}
 	public static void main(String[] args) {
 		System.out.println(generateToken("")); 
