@@ -1,50 +1,67 @@
 package com.sheremet.client;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class SignIn {
+import com.sheremet.server.DBAPI;
 
-	public static void main(String[] args) {
+public class SignIn extends JPanel{
+	private DBSecureAPI api; 
+	public static void main(String[] args) throws UnknownHostException, IOException {
 		JFrame frame = new JFrame("Demo application");
 		frame.setSize(300, 150);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		placeComponents(frame);
+		ClientConnection connection = new ClientConnection();
+		SignIn in = new SignIn(connection );
+		in.placeComponents(frame);
 		frame.setVisible(true);
 	}
-
-	private static void placeComponents(JFrame frame) {
-		frame.setLayout(null);
-
+	public SignIn(ClientConnection connection) {
+		api = new DBSecureAPI(connection);
 		JLabel userLabel = new JLabel("User");
 		userLabel.setBounds(10, 10, 80, 25);
-		frame.add(userLabel);
+		add(userLabel);
 
-		JTextField userText = new JTextField(20);
+		final JTextField userText = new JTextField(20);
 		userText.setBounds(100, 10, 160, 25);
-		frame.add(userText);
+		add(userText);
 
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(10, 40, 80, 25);
-		frame.add(passwordLabel);
+		add(passwordLabel);
 
-		JPasswordField passwordText = new JPasswordField(20);
+		final JPasswordField passwordText = new JPasswordField(20);
 		passwordText.setBounds(100, 40, 160, 25);
-		frame.add(passwordText);
+		add(passwordText);
 
 		JButton loginButton = new JButton("login");
 		loginButton.setBounds(10, 80, 80, 25);
-		frame.add(loginButton);
+		add(loginButton);
 
 		JButton registerButton = new JButton("register");
 		registerButton.setBounds(180, 80, 80, 25);
-		frame.add(registerButton);
+		add(registerButton);
 
-		ActionListener loginButtonListener = new ButtonListener();
+		ActionListener loginButtonListener = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				api.login(userText.getText(), new String(passwordText.getPassword()));
+			}
+			
+		};
 		loginButton.addActionListener(loginButtonListener);
+	}
+	private void placeComponents(JFrame frame) {
+		
 	}
 }
