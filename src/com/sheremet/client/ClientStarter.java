@@ -12,9 +12,9 @@ public class ClientStarter {
 
 	private void run() {
 		try{
-		connection = new ClientConnection();
+			connection = new ClientConnection();
 		}catch(Exception e){
-			
+
 		}
 		clientFrame = new ClientFrame(connection, this);
 	}
