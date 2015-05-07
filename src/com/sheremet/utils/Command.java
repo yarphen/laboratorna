@@ -13,7 +13,6 @@ public class Command {
 	public Command(HashMap<String, Object> map) throws Exception {
 		String commandtype = (String) map.get("act");
 		switch (commandtype) {
-		case 	"regRequest": type = Commands.regRequest;break;
 		case 	"login": type = Commands.login;break;
 		case	"getBratchykChildren":type = Commands.getBratchykChildren;break;
 		case	"getHeadBratchyks":type = Commands.getHeadBratchyks;break;
@@ -57,8 +56,8 @@ public class Command {
 	}
 
 	public Object execute(com.sheremet.server.SecurityManager manager) {
-		return null;
-		// TODO Auto-generated method stub
+		
+		return manager.tryToDo(this);
 
 	}
 

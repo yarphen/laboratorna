@@ -1,7 +1,6 @@
 package com.sheremet.utils;
 
 public enum Commands {
- 	regRequest, 
  	login,
 	getBratchykChildren,
 	getHeadBratchyks,
