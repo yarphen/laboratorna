@@ -5,12 +5,21 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class User {
-	public User(HashMap<String, Object> map) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public User(HashMap<String, Object> map)  {
 		Class<User> userClass = User.class;
 		Set<String> set = map.keySet();
 		for (String s:set){
-			Field f = userClass.getField(s);
-			f.set(this, map.get(s));
+			Field f = null;
+			try {
+				f = userClass.getField(s);
+			} catch (NoSuchFieldException | SecurityException e1) {
+				e1.printStackTrace();
+			}
+			try {
+				f.set(this, map.get(s));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	public User() {
