@@ -20,7 +20,8 @@ public class Tester {
 
 		public static void main(String[] args) {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			String xml = "<xml><g>a</g><h><j t='' y='12' /></h></xml>";
+			//String xml = "<xml><g>a</g><h><j t='' y='12' /></h></xml>";
+			String xml="<command><type>getBratchykChildren</type><args><arg name=\"id\" value=\"\" type=\"long\"/></args></command>	";
 	        try {
 	        	DocumentBuilder db = dbf.newDocumentBuilder();
 	        	Document document = db.parse(new ByteArrayInputStream(xml.getBytes()));
@@ -31,8 +32,8 @@ public class Tester {
 	        	DOMSource domSource = new DOMSource(document);
 	        	transformer.transform(domSource, new StreamResult(writer));
 	        	String output = writer.getBuffer().toString();//.replaceAll("\n|\r", "");
-	        	System.out.println(output);
-	        	
+	        	document.getDocumentElement().getNodeName();
+	        	//System.out.println(Parser.loadXMLFromString(xml));
 	        	
 	        	
 	        	
