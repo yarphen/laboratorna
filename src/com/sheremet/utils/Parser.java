@@ -17,6 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class Parser {
@@ -89,7 +90,7 @@ public class Parser {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document document = db.newDocument();
-		Element main = elementFromUser(document, );
+		Element main = elementFromUser(document, null);
 		return null;
 	}
 
@@ -114,6 +115,7 @@ public class Parser {
 			//			main.setAttribute("a", "l");
 			//			main.setTextContent("sidhvbsidvbsdivb");
 			Element main = elementFromUser(document, user );
+			User u = parseUser(main);
 			document.appendChild(main);
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer transformer = tf.newTransformer();
@@ -138,7 +140,7 @@ public class Parser {
 		Element element = document.createElement("date");
 		element.setAttribute("year", ""+date.getYear());
 		element.setAttribute("month", ""+date.getMonth());
-		element.setAttribute("day", ""+date.getDay());
+		element.setAttribute("day", ""+(date.getDay()+1));
 		return element;
 
 	}
@@ -213,6 +215,84 @@ public class Parser {
 
 		return element;
 	}
+	private static Integer parseInt(Element e){
+		if (e.getTagName().equals("int")){
+			try {
+				return Integer.parseInt(e.getTextContent());
+			}catch(NumberFormatException exception){
+				return null;
+			}
+		}else{
+			return null;
+		}
+	}
+	private static String parseString(Element e){
+		if (e.getTagName().equals("string")){
+			return e.getTextContent();
+		}else{
+			return null;
+		}
+	}
+	private static Long parseLong(Element e){
+		if (e.getTagName().equals("long")){
+			try {
+				return Long.parseLong(e.getTextContent());
+			}catch(NumberFormatException exception){
+				return null;
+			}
+		}else{
+			return null;
+		}
+	}
+	@SuppressWarnings("deprecation")
+	private static Date parseDate(Element e){
+		if (e.getTagName().equals("date")){
+			try{
+				return new Date(Integer.parseInt(e.getAttribute("year")), Integer.parseInt(e.getAttribute("month")), Integer.parseInt(e.getAttribute("day")));
+			}catch(NumberFormatException exception){
+				return null;
+			}
+		}else{
+			return null;
+		}
+	}
+	private static User parseUser(Element e) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if (e.getTagName().equals("user")){
+			NodeList list = e.getChildNodes();
+			for (int i=0; i<list.getLength(); i++){
+				Element element = (Element) list.item(i);
+				if (element.getTagName()!="param") continue;
+				String elementName = element.getAttribute("name");
+				switch (elementName) {
+				case "email":
+					map.put("email", parseString((Element) element.getFirstChild()));
+					break;
+				case "id":
+					map.put("id", parseLong((Element) element.getFirstChild()));
+					break;
+				case "name":
+					map.put("name", parseString((Element) element.getFirstChild()));
+					break;
+				case "passhash":
+					map.put("passhash", parseString((Element) element.getFirstChild()));
+					break;
+				case "permission":
+					map.put("permission", parseInt((Element) element.getFirstChild()));
 
+					break;
+				default:
+					break;
+				}
+			}
+		}else{
+			return null;
+		}
+		return new User(map);
+
+
+
+
+	}
 }
 
