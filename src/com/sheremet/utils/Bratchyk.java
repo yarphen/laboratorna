@@ -32,7 +32,6 @@ public class Bratchyk {
 		rikvypusku = b.rikvypusku;
 		specialnist = b.specialnist;
 		version_id = b.version_id;
-		
 	}
 	public Bratchyk() {
 		// TODO Auto-generated constructor stub
