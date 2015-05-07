@@ -24,7 +24,6 @@ public class Permissions{
 		map.put(Commands.getUser, AUTHORIZEDUSER);
 		map.put(Commands.getUserList, ADMIN);
 		map.put(Commands.login, GUEST);
-		map.put(Commands.regRequest, GUEST);
 		map.put(Commands.setBratchyk, ADMIN);
 		map.put(Commands.setUser, AUTHORIZEDUSER);
 	}
