@@ -55,14 +55,12 @@ public class CommandExecutor {
 		case login:
 		{
 			User u = api.getUser((String)command.getMapElement("login"));
-			if (u.passhash ==api.md5( (String)command.getMapElement("password"))){
-				String token = api.generateToken(u.passhash);
+			if (u.passhash ==DBAPI.md5( (String)command.getMapElement("password"))){
+				String token = DBAPI.generateToken(u.passhash);
 				api.addAccessToken(u.id, token);
 				return token;
-			}else return null;
+			}else return "";
 		}
-		case regRequest:
-			return null;
 		case setUser:
 		{
 			return api.setUser((User)command.getMapElement("user"), (Long)command.getMapElement("id"));
@@ -80,4 +78,5 @@ public class CommandExecutor {
 		}
 
 	}
+	//Bratchyk[], Bratchyk, User, User[], boolean, String
 }
