@@ -54,6 +54,11 @@ public class Parser {
 		return res;	
 	}*/
 
+	public static HashMap<String, Object> parseXMLtoCommandHashMap(String string) {
+
+		return null;
+	}
+	
 	public static String unparseXMLfromCommandHashMap(Commands type, HashMap<String, Object> map) {
 		try {
 			Document document = builder.newDocument();
@@ -86,10 +91,103 @@ public class Parser {
 		return null;
 	}
 
-	public static HashMap<String, Object> parseXMLtoCommandHashMap(String string) {
-
-		return null;
+	private static User parseUser(Element e) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if (e.getTagName().equals("user")){
+			NodeList list = e.getChildNodes();
+			for (int i=0; i<list.getLength(); i++){
+				Element element = (Element) list.item(i);
+				if (element.getTagName()!="param") continue;
+				String elementName = element.getAttribute("name");
+				switch (elementName) {
+				case "email":
+					map.put("email", parseString((Element) element.getFirstChild()));
+					break;
+				case "id":
+					map.put("id", parseLong((Element) element.getFirstChild()));
+					break;
+				case "name":
+					map.put("name", parseString((Element) element.getFirstChild()));
+					break;
+				case "passhash":
+					map.put("passhash", parseString((Element) element.getFirstChild()));
+					break;
+				case "permission":
+					map.put("permission", parseInt((Element) element.getFirstChild()));
+					break;
+				default:
+					break;
+				}
+			}
+		}else{
+			return null;
+		}
+		return new User(map);
 	}
+
+	private static Bratchyk parseBratchyk(Element e) throws Exception{
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if (e.getTagName().equals("bratchyk")){
+			NodeList list = e.getChildNodes();
+			for (int i=0; i<list.getLength(); i++){
+				Element element = (Element) list.item(i);
+				if (element.getTagName()!="param") continue;
+				String elementName = element.getAttribute("name");
+				switch (elementName) {
+				case "dataankety":
+					map.put("dataankety", parseDate((Element) element.getFirstChild()));
+					break;
+				case "datanarodzhennia":
+					map.put("datanarodzhennia", parseDate((Element) element.getFirstChild()));
+					break;
+				case "dataopatronennia":
+					map.put("dataopatronennia", parseDate((Element) element.getFirstChild()));
+					break;
+				case "dataposhanuvannia":
+					map.put("dataposhanuvannia", parseDate((Element) element.getFirstChild()));
+					break;
+				case "datavysviaty":
+					map.put("datavysviaty", parseDate((Element) element.getFirstChild()));
+					break;
+				case "id":
+					map.put("id", parseLong((Element) element.getFirstChild()));
+					break;
+				case "imya":
+					map.put("imya", parseString((Element) element.getFirstChild()));
+					break;
+				case "kontakty":
+					map.put("kontakty", parseString((Element) element.getFirstChild()));
+					break;
+				case "patron_id":
+					map.put("patron_id", parseLong((Element) element.getFirstChild()));
+					break;
+				case "prizvysche":
+					map.put("prizvysche", parseString((Element) element.getFirstChild()));
+					break;
+				case "pobatkovi":
+					map.put("pobatkovi", parseString((Element) element.getFirstChild()));
+					break;
+				case "rikvstupu":
+					map.put("rikvstupu", parseInt((Element) element.getFirstChild()));
+					break;
+				case "rikvypusku":
+					map.put("rikvypusku", parseInt((Element) element.getFirstChild()));
+					break;
+				case "specialnist":
+					map.put("specialnist", parseString((Element) element.getFirstChild()));
+					break;
+				case "version_id":
+					map.put("version_id", parseLong((Element) element.getFirstChild()));
+					break;
+				default:
+					break;
+				}
+			}
+		}else{
+			return null;
+		}
+		return new Bratchyk(map);
+			}
 	
 	private static Element elementFromDate(Document document, Date date){
 		Element element = document.createElement("date");
@@ -239,54 +337,5 @@ public class Parser {
 			return null;
 		}
 	}
-	
-	private static User parseUser(Element e) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		if (e.getTagName().equals("user")){
-			NodeList list = e.getChildNodes();
-			for (int i=0; i<list.getLength(); i++){
-				Element element = (Element) list.item(i);
-				if (element.getTagName()!="param") continue;
-				String elementName = element.getAttribute("name");
-				switch (elementName) {
-				case "email":
-					map.put("email", parseString((Element) element.getFirstChild()));
-					break;
-				case "id":
-					map.put("id", parseLong((Element) element.getFirstChild()));
-					break;
-				case "name":
-					map.put("name", parseString((Element) element.getFirstChild()));
-					break;
-				case "passhash":
-					map.put("passhash", parseString((Element) element.getFirstChild()));
-					break;
-				case "permission":
-					map.put("permission", parseInt((Element) element.getFirstChild()));
-					break;
-				default:
-					break;
-				}
-			}
-		}else{
-			return null;
-		}
-		return new User(map);
-	}
-
-	private static Bratchyk parseBratchyk(Element e){
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		if (e.getTagName().equals("bratchyk")){
-			NodeList list = e.getChildNodes();
-			for (int i=0; i<list.getLength(); i++){
-				Element element = (Element) list.item(i);
-				if (element.getTagName()!="param") continue;
-				String elementName = element.getAttribute("name");
-				switch (elementName){
-				}
-				}
-	}
-		return null;
-			}
 }
 
