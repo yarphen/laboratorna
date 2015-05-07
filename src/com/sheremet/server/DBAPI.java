@@ -266,8 +266,10 @@ public class DBAPI {
 		}
 	}
 	private boolean addVersion(Bratchyk version) throws SQLException{
-		ResultSet resultSet = getBratchykSet(version.patron_id, BRATCHYKSACTIVEBYPATRON);
-		if (!resultSet.next()) return false;
+		if (version.patron_id!=null){
+			ResultSet resultSet = getBratchykSet(version.patron_id, BRATCHYKSACTIVEBYPATRON);
+			if (!resultSet.next()) return false;
+		}
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyky' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			statement.setDate(1, version.dataankety);
@@ -397,7 +399,7 @@ public class DBAPI {
 			material+=token;
 		}
 		return token;
-		
+
 	}
 	public static void main(String[] args) {
 		System.out.println(generateToken("")); 
