@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import com.sheremet.utils.Bratchyk;
+import com.sheremet.utils.LoginResult;
 import com.sheremet.utils.User;
 
 public class DBAPI {
@@ -125,21 +126,24 @@ public class DBAPI {
 		return delVersion(id, part);
 	}
 
-	public boolean addUser(User user){
+	public LoginResult addUser(User user){
+		Long id = generateID() ;
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO 'users' VALUES(?, ?, ?, ?, ?, ?)");
 			statement.setString(1, user.email);
-			statement.setLong(2, user.id);
+			statement.setLong(2, id);
 			statement.setString(3, user.name);
 			statement.setString(4, user.passhash);
-			statement.setInt(5, user.permission);
+			statement.setInt(5, currentPermission());
 			statement.execute();
 			statement.close();
 
 		}catch (SQLException e){
-			return false;
+			return null;
 		}
-		return true;
+		String access_token = generateToken(user.passhash);
+		addAccessToken(id, access_token);
+		return new LoginResult(access_token, getUser(id));
 	}
 	public boolean deleteUser(long id){
 		try{
@@ -218,6 +222,12 @@ public class DBAPI {
 		}catch (SQLException e){
 			return false;
 		}
+	}
+	private int currentPermission() {
+		if (getUserList().length==0)
+			return Permissions.ADMIN;
+		else
+			return Permissions.AUTHORIZEDUSER;
 	}
 	private long generateID() {
 		long l = System.currentTimeMillis();
