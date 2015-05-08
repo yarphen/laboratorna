@@ -7,15 +7,11 @@ public class ClientStarter {
 	public static void main(String[] args) {
 		ClientStarter starter = new ClientStarter();
 		starter.run();
-		//run it
 	}
-
 	private void run() {
 		try{
 			connection = new ClientConnection();
-		}catch(Exception e){
-
-		}
-		clientFrame = new ClientFrame(connection, this);
+		}catch(Exception e){}
+		clientFrame = new ClientFrame(connection, this, api);
 	}
 }
