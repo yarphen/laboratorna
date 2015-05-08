@@ -12,21 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.sheremet.server.DBAPI;
-
 public class SignInPanel extends JPanel{
 	private DBSecureAPI api; 
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		JFrame frame = new JFrame("Enter your account");
-		frame.setSize(300, 150);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ClientConnection connection = new ClientConnection();
-		SignInPanel in = new SignInPanel(connection );
-		in.placeComponents(frame);
-		frame.setVisible(true);
+//		JFrame frame = new JFrame("Enter your account");
+//		frame.setSize(300, 150);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		ClientConnection connection = new ClientConnection();
+//		SignInPanel in = new SignInPanel(connection );
+//		in.placeComponents(frame);
+//		frame.setVisible(true);
 	}
-	public SignInPanel(ClientConnection connection) {
-		api = new DBSecureAPI(connection);
+	public SignInPanel(DBSecureAPI api2, ClientFrame clientFrame) {
 		JLabel userLabel = new JLabel("User");
 		userLabel.setBounds(10, 10, 80, 25);
 		add(userLabel);
@@ -47,10 +44,6 @@ public class SignInPanel extends JPanel{
 		loginButton.setBounds(10, 80, 80, 25);
 		add(loginButton);
 
-		JButton registerButton = new JButton("register");
-		registerButton.setBounds(180, 80, 80, 25);
-		add(registerButton);
-
 		ActionListener loginButtonListener = new ActionListener(){
 
 			@Override
@@ -60,8 +53,5 @@ public class SignInPanel extends JPanel{
 			
 		};
 		loginButton.addActionListener(loginButtonListener);
-	}
-	void placeComponents(JFrame frame) {
-		
 	}
 }

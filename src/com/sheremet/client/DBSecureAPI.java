@@ -4,15 +4,19 @@ import java.util.HashMap;
 
 import com.sheremet.utils.Bratchyk;
 import com.sheremet.utils.Command;
+import com.sheremet.utils.LoginResult;
 import com.sheremet.utils.User;
 
 public class DBSecureAPI {
 	private String access_token="";
+	private User user;
 	private ClientConnection connection;
-	public DBSecureAPI(ClientConnection connection) {
+	private ClientFrame clientFrame;
+	public DBSecureAPI(ClientConnection connection, ClientFrame clientFrame) {
 		this.connection = connection;
+		this.clientFrame=clientFrame;
 	}
-	public boolean login(String login, String password){
+	public LoginResult login(String login, String password){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "login");
 		map.put("login", login);
@@ -20,11 +24,14 @@ public class DBSecureAPI {
 		Command command;
 		try {
 			command = new Command(map);
+			LoginResult result = (LoginResult) command.send(connection);
+			access_token = result.getAccess_token();
+			user = result.getUser();
+			clientFrame.setUser(user);
+			return result;
 		} catch (Exception e) {
-			return false;
+			return new LoginResult("", null);
 		}
-		access_token = (String) command.send(connection);
-		return true;
 	}
 	public Bratchyk[] getBratchykChildren(long id){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -130,7 +137,7 @@ public class DBSecureAPI {
 		}
 		return (Boolean) command.send(connection);
 	}
-	public boolean addUser(User user){
+	public LoginResult addUser(User user){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "addUser");
 		map.put("access_token", access_token);
@@ -139,9 +146,13 @@ public class DBSecureAPI {
 		try {
 			command = new Command(map);
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
-		return (Boolean) command.send(connection);
+		LoginResult result = (LoginResult) command.send(connection);
+		access_token=result.getAccess_token();
+		this.user = result.getUser();
+		clientFrame.setUser(user);
+		return result;
 	}
 	public boolean addBratchyk(Bratchyk bratchyk){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -208,6 +219,19 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
+		return (Boolean) command.send(connection);
+	}
+	public boolean logOut() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("act", "logOut");
+		map.put("access_token", access_token);
+		Command command;
+		try {
+			command = new Command(map);
+		} catch (Exception e) {
+			return false;
+		}
+		access_token = "";
 		return (Boolean) command.send(connection);
 	}
 }
