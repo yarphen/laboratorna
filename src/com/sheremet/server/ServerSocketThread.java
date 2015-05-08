@@ -22,6 +22,7 @@ public class ServerSocketThread extends Thread{
 			PrintWriter writer = new PrintWriter(socket.getOutputStream());
 			while (scanner.hasNextLine()){
 				String string = scanner.nextLine();
+				System.out.println(string);
 				Command command = new Command(Parser.parseXMLtoCommandHashMap(string));
 				writer.println(Parser.unparseXMLfromResultObject(command.execute(manager)));
 			}
