@@ -2,6 +2,7 @@ package com.sheremet.server;
 
 import com.sheremet.utils.Bratchyk;
 import com.sheremet.utils.Command;
+import com.sheremet.utils.LoginResult;
 import com.sheremet.utils.User;
 
 public class CommandExecutor {
@@ -58,7 +59,7 @@ public class CommandExecutor {
 			if (u.passhash ==DBAPI.md5( (String)command.getMapElement("password"))){
 				String token = DBAPI.generateToken(u.passhash);
 				api.addAccessToken(u.id, token);
-				return token;
+				return new LoginResult(token, u);
 			}else return "";
 		}
 		case setUser:
@@ -78,5 +79,5 @@ public class CommandExecutor {
 		}
 
 	}
-	//Bratchyk[], Bratchyk, User, User[], boolean, String
+	//Bratchyk[], Bratchyk, User, User[], boolean, String , LoginResult 
 }
