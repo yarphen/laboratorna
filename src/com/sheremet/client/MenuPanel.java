@@ -6,14 +6,43 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.sheremet.server.Permissions;
+
 public class MenuPanel extends JPanel {
 	private ClientFrame clientFrame;
 	public MenuPanel(ClientFrame clientFrame) {
 		this.clientFrame = clientFrame;
 	}
 	public void setMode(int mode) {
-		// TODO Auto-generated method stub
-
+		removeAll();
+		switch (mode) {
+		case Permissions.ADMIN:{
+			addLogoutButton();
+			addPermitionsEditButton();
+			addOwnAccountButton();
+			addTreeEditButton();
+			addTreeViewButton();
+		}
+		break;
+		case Permissions.AUTHORIZEDUSER:{
+			addLogoutButton();
+			addOwnAccountButton();
+			addTreeViewButton();
+		}
+		break;
+		case Permissions.GUEST:{
+			addSignInButton();
+			addSignUpButton();
+			addTreeViewButton();
+		}
+		break;
+		case Permissions.SBUSER:{
+			addLogoutButton();
+			addOwnAccountButton();
+			addTreeViewButton();
+		}
+		break;
+		}
 	}
 	private void addSignInButton(){
 		JButton button = new JButton("SignIn");
