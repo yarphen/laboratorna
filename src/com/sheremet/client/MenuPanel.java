@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class MenuPanel extends JPanel {
 	private ClientFrame clientFrame;
 	public MenuPanel(ClientFrame clientFrame) {
-		clientFrame.logOut();
+		this.clientFrame = clientFrame;
 	}
 	public void setMode(int mode) {
 		// TODO Auto-generated method stub
