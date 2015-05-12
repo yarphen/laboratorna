@@ -12,28 +12,35 @@ public class DBSecureAPI {
 	private User user;
 	private ClientConnection connection;
 	private ClientFrame clientFrame;
-	public DBSecureAPI(ClientConnection connection, ClientFrame clientFrame) {
+	public DBSecureAPI(ClientConnection connection) {
 		this.connection = connection;
-		this.clientFrame=clientFrame;
 	}
-	public LoginResult login(String login, String password){
+	public void setClientFrame(ClientFrame clientFrame) {
+		this.clientFrame = clientFrame;
+	}
+	public LoginResult login(String login, String password) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "login");
 		map.put("login", login);
 		map.put("password", password);
-		Command command;
+		Command command = null;
 		try {
 			command = new Command(map);
 			LoginResult result = (LoginResult) command.send(connection);
 			access_token = result.getAccess_token();
 			user = result.getUser();
-			clientFrame.setUser(user);
+			if (clientFrame!=null)
+				clientFrame.setUser(user);
 			return result;
 		} catch (Exception e) {
-			return new LoginResult("", null);
+			try{
+				return new LoginResult("", null);
+			}catch(ClassCastException exception){
+				throw new ServerException((String)command.send(connection));
+			}
 		}
 	}
-	public Bratchyk[] getBratchykChildren(long id){
+	public Bratchyk[] getBratchykChildren(long id) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "getBratchykChildren");
 		map.put("access_token", access_token);
@@ -44,9 +51,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk[]) command.send(connection);
+		try{
+			return (Bratchyk[]) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public Bratchyk[] getHeadBratchyks(){		
+	public Bratchyk[] getHeadBratchyks() throws ServerException{		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "getHeadBratchyks");
 		map.put("access_token", access_token);
@@ -56,9 +67,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk[]) command.send(connection);
+		try{
+			return (Bratchyk[]) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public Bratchyk getBratchyk(long id){
+	public Bratchyk getBratchyk(long id) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "getBratchyk");
 		map.put("access_token", access_token);
@@ -69,9 +84,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk) command.send(connection);
+		try{
+			return (Bratchyk) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public Bratchyk[] getBratchykHistory(long id){
+	public Bratchyk[] getBratchykHistory(long id) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "getBratchykHistory");
 		map.put("access_token", access_token);
@@ -82,9 +101,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (Bratchyk[]) command.send(connection);
+		try{
+			return (Bratchyk[]) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public User[] getUserList(){
+	public User[] getUserList() throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "getUserList");
 		map.put("access_token", access_token);
@@ -94,9 +117,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (User[]) command.send(connection);
+		try{
+			return (User[]) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public User getUser(long id){
+	public User getUser(long id) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "getUser");
 		map.put("access_token", access_token);
@@ -107,9 +134,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		return (User) command.send(connection);
+		try{
+			return (User) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public boolean setBratchyk(Bratchyk bratchyk, long id){
+	public boolean setBratchyk(Bratchyk bratchyk, long id) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "setBratchyk");
 		map.put("access_token", access_token);
@@ -121,9 +152,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public boolean setUser(User user, long id){
+	public boolean setUser(User user, long id) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "setUser");
 		map.put("access_token", access_token);
@@ -135,7 +170,11 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
 	public LoginResult addUser(User user){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -151,10 +190,11 @@ public class DBSecureAPI {
 		LoginResult result = (LoginResult) command.send(connection);
 		access_token=result.getAccess_token();
 		this.user = result.getUser();
-		clientFrame.setUser(user);
+		if (clientFrame!=null)
+			clientFrame.setUser(user);
 		return result;
 	}
-	public boolean addBratchyk(Bratchyk bratchyk){
+	public boolean addBratchyk(Bratchyk bratchyk) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "addBratchyk");
 		map.put("access_token", access_token);
@@ -165,9 +205,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public boolean deleteBratchyk(long id) {
+	public boolean deleteBratchyk(long id) throws ServerException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "deleteBratchyk");
 		map.put("access_token", access_token);
@@ -178,9 +222,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public boolean deleteBratchykHistory(long id, int part) {
+	public boolean deleteBratchykHistory(long id, int part) throws ServerException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "deleteBratchykHistory");
 		map.put("access_token", access_token);
@@ -192,9 +240,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public boolean deleteUser(long id) {
+	public boolean deleteUser(long id) throws ServerException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "deleteUser");
 		map.put("access_token", access_token);
@@ -205,9 +257,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public boolean setUserPermission(long id, int permission){
+	public boolean setUserPermission(long id, int permission) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "setUserPermission");
 		map.put("access_token", access_token);
@@ -219,9 +275,13 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return false;
 		}
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
-	public boolean logOut() {
+	public boolean logOut() throws ServerException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "logOut");
 		map.put("access_token", access_token);
@@ -232,7 +292,11 @@ public class DBSecureAPI {
 			return false;
 		}
 		access_token = "";
-		return (Boolean) command.send(connection);
+		try{
+			return (Boolean) command.send(connection);
+		}catch(ClassCastException exception){
+			throw new ServerException((String)command.send(connection));
+		}
 	}
 }
 
