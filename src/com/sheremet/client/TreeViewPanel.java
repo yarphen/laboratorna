@@ -1,11 +1,8 @@
 package com.sheremet.client;
 
 
-import java.awt.Container;
-import java.awt.event.*;
-
-import javax.swing.*;
-import javax.swing.tree.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 
