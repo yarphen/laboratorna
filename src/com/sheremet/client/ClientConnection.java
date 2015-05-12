@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ClientConnection extends Thread{
 	private Socket socket; 
 	private PrintWriter writer;
-	private LinkedBlockingQueue<Node> queue;
+	private LinkedBlockingQueue<Node> queue = new LinkedBlockingQueue<>();
 	private Scanner scanner;
 	public class Node {
 		public Node(String command, StringResultHandler handler) {
@@ -24,9 +24,10 @@ public class ClientConnection extends Thread{
 		StringResultHandler handler;
 	}
 	public ClientConnection() throws UnknownHostException, IOException {
-		socket = new Socket(InetAddress.getLocalHost(), 80);//for local server. change it for remote server
+		socket = new Socket(InetAddress.getLocalHost(), 9999);//for local server. change it for remote server
 		writer = new PrintWriter(socket.getOutputStream());
 		scanner = new Scanner (socket.getInputStream());
+		start();
 	}
 	public void send(String command, StringResultHandler handler){
 		
@@ -51,7 +52,6 @@ public class ClientConnection extends Thread{
 					try {
 						node = queue.take();
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					writer.println(node.command);
