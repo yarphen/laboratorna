@@ -12,6 +12,7 @@ public class MenuPanel extends JPanel {
 	private ClientFrame clientFrame;
 	public MenuPanel(ClientFrame clientFrame) {
 		this.clientFrame = clientFrame;
+		setMode(0);
 	}
 	public void setMode(int mode) {
 		removeAll();
@@ -61,7 +62,7 @@ public class MenuPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientFrame.setMode(ClientFrame.SignInUpMode);
+				clientFrame.setMode(ClientFrame.SignUpMode);
 			}
 		});
 		add(button);
