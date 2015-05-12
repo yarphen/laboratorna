@@ -45,15 +45,20 @@ public class SBTree extends JTree{
 		});
 	}
 	private void init(){
-		Bratchyk[] heads = new Bratchyk[10];
-		for (int i=0; i<10; i++){
-			Bratchyk bratchyk = new Bratchyk();
-			bratchyk.prizvysche = "" + (int)(100*Math.random());
-			bratchyk.imya = "sdvsdv d sd sd sd sd sd ";
-			bratchyk.pobatkovi = "DBSDSDVSDVDSV";
-			heads[i] = bratchyk;
+		//		Bratchyk[] heads = new Bratchyk[10];
+		//		for (int i=0; i<10; i++){
+		//			Bratchyk bratchyk = new Bratchyk();
+		//			bratchyk.prizvysche = "" + (int)(100*Math.random());
+		//			bratchyk.imya = "sdvsdv d sd sd sd sd sd ";
+		//			bratchyk.pobatkovi = "DBSDSDVSDVDSV";
+		//			heads[i] = bratchyk;
+		//		}
+		Bratchyk[] heads = null;
+		try {
+			heads = api.getHeadBratchyks();
+		} catch (ServerException e) {
+			showMessage(e.getMessage()+": "+e.getLocalizedMessage());
 		}
-		//		Bratchyk[] heads = api.getHeadBratchyks();
 
 		for (Bratchyk b: heads){
 			final DefaultMutableTreeNode node = new DefaultMutableTreeNode(b);
@@ -64,21 +69,35 @@ public class SBTree extends JTree{
 	private void load(DefaultMutableTreeNode node1) {
 		if (set.contains(toPath(node1))) return;
 		set.add(toPath(node1));
-		Bratchyk[] children = new Bratchyk[new Random().nextInt(2)];
-		for (int i=0; i<children.length; i++){
-			Bratchyk bratchyk = new Bratchyk();
-			bratchyk.prizvysche = "" + (int)(100*Math.random());
-			//			bratchyk.imya = "sdvsdv d sd sd sd sd sd ";
-			//			bratchyk.pobatkovi = "DBSDSDVSDVDSV";
-			children[i] = bratchyk;
+		//		Bratchyk[] children = new Bratchyk[new Random().nextInt(2)];
+		//		for (int i=0; i<children.length; i++){
+		//			Bratchyk bratchyk = new Bratchyk();
+		//			bratchyk.prizvysche = "" + (int)(100*Math.random());
+		//			//			bratchyk.imya = "sdvsdv d sd sd sd sd sd ";
+		//			//			bratchyk.pobatkovi = "DBSDSDVSDVDSV";
+		//			children[i] = bratchyk;
+		//		}
+		Bratchyk[] children = null;
+		try {
+			children = api.getBratchykChildren(((Bratchyk)node1.getUserObject()).id);
+		} catch (ServerException e) {
+			showMessage(e.getMessage()+": "+e.getLocalizedMessage());
 		}
-		//				Bratchyk[] children = api.getBratchykChildren(((Bratchyk)node1.getUserObject()).id);
 
 		for (Bratchyk b: children){
 			final DefaultMutableTreeNode node = new DefaultMutableTreeNode(b);
 			final long id = new Random().nextLong();
 			model.insertNodeInto(node, (MutableTreeNode) node1, 0);
 		}
+	}
+	private void showMessage(final String string) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				javax.swing.JOptionPane.showMessageDialog(null, string);
+			}
+		}).start();
 	}
 	public static void main(String[] args) {
 
