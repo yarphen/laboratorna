@@ -7,7 +7,7 @@ import com.sheremet.utils.User;
 
 public class ClientFrame extends JFrame{
 	protected static final int SignInMode = 0;
-	protected static final int SignInUpMode = 1;
+	protected static final int SignUpMode = 1;
 	protected static final int OwnAccountMode = 2;
 	protected static final int PermitionsEditMode = 3;
 	protected static final int TreeEditMode = 4;
@@ -48,11 +48,80 @@ public class ClientFrame extends JFrame{
 		this.user=user;
 	}
 	public void logOut(){
-		api.logOut();
+		try {
+			api.logOut();
+		} catch (ServerException e) {
+			showMessage(e.getMessage()+": "+e.getLocalizedMessage());
+		}
 		user = null;
 	}
-	public void setMode(int signinupmode2) {
-		// TODO Auto-generated method stub
+	public void showMessage(final String string) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				javax.swing.JOptionPane.showMessageDialog(null, string);
+			}
+		}).start();
+	}
+	public void setMode(int mode) {
+		switch (mode) {
+		case SignInMode:
+			acc.setVisible(false);
+			perm.setVisible(false);
+			signIn.setVisible(true);
+			signUp.setVisible(false);
+			tEdit.setVisible(false);
+			tView.setVisible(false);
+			break;
+		case SignUpMode:
+			acc.setVisible(false);
+			perm.setVisible(false);
+			signIn.setVisible(false);
+			signUp.setVisible(true);
+			tEdit.setVisible(false);
+			tView.setVisible(false);
+			
+			break;
+		case OwnAccountMode:
+			acc.setVisible(true);
+			perm.setVisible(false);
+			signIn.setVisible(false);
+			signUp.setVisible(false);
+			tEdit.setVisible(false);
+			tView.setVisible(false);
+			
+			break;
+		case PermitionsEditMode:
+			acc.setVisible(false);
+			perm.setVisible(true);
+			signIn.setVisible(false);
+			signUp.setVisible(false);
+			tEdit.setVisible(false);
+			tView.setVisible(false);
+			
+			break;
+		case TreeEditMode:
+			acc.setVisible(false);
+			perm.setVisible(false);
+			signIn.setVisible(false);
+			signUp.setVisible(false);
+			tEdit.setVisible(true);
+			tView.setVisible(false);
+			
+			break;
+		case TreeViewMode:
+			acc.setVisible(false);
+			perm.setVisible(false);
+			signIn.setVisible(false);
+			signUp.setVisible(false);
+			tEdit.setVisible(false);
+			tView.setVisible(true);
+			
+			break;
 
+		default:
+			break;
+		}
 	}
 }
