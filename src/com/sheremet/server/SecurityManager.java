@@ -20,7 +20,7 @@ public class SecurityManager {
 		int permission = api.getPermissionOfTheToken(access_token);
 		if (Permissions.get(command.getType())<=permission){
 			Object result =  commandExecutor.execute(command);
-			if (result==null){
+			if (result!=null){
 				String resultType = result.getClass().getName();
 				switch (resultType) {
 

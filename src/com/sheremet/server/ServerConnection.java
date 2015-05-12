@@ -8,7 +8,7 @@ public class ServerConnection extends Thread{
 	@Override
 	public void run() {
 		try {
-			server = new ServerSocket(80);
+			server = new ServerSocket(9999);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
