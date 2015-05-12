@@ -9,7 +9,8 @@ public class OwnAccountPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = -6358870323043639245L;
-	private JLabel labelName = new JLabel("labelName");
+	private JLabel labelName = new JLabel("labelName"
+			+ "");
 	private JLabel labelEmail = new JLabel("labelEmail");
 	private JLabel labelPermission = new JLabel("labelPermission");
 	private JLabel labelChangePassword = new JLabel("labelChangePassword");
