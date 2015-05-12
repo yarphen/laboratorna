@@ -19,7 +19,7 @@ import com.sheremet.utils.User;
 
 public class DBAPI {
 	private Connection con;
-	private static final String FILENAME = "";
+	private static final String FILENAME = "db1.db";
 	public static final int BRATCHYKSACTIVEBYPATRON = 0;
 	public static final int BRATCHYKSACTIVEBYID = 1;
 	public static final int BRATCHYKSALLBYID = 2;
@@ -32,8 +32,8 @@ public class DBAPI {
 			con = DriverManager.getConnection("jdbc:sqlite:" + FILENAME);
 			Statement statement = con.createStatement();
 			statement.execute("create table if not exists 'users' ( 'email' TEXT, 'id' INTEGER PRIMARY KEY,  'name' TEXT, 'passhash' TEXT, 'permission' INTEGER)");
-			statement.execute("create table if not exists 'bratchyky' ('name' TEXT, 'golova' TEXT, 'id' INTEGER PRIMARY KEY AUTOINCREMENT)");
-			statement.execute("create table if not exists 'tokens' ('name' TEXT, 'typeofprogram' TEXT,  'years' INTEGER, 'id' INTEGER PRIMARY KEY AUTOINCREMENT)");
+			statement.execute("create table if not exists 'bratchyky' ('actual' INTEGER, 'dataankety' DATETIME,'datanarodzhennia' DATETIME,'dataopatronennia' DATETIME,'dataposhanuvannia' DATETIME,'dataversii' DATETIME,'datavysviaty' DATETIME,'id' INTEGER,'imya' TEXT,'kontakty' TEXT,'patron_id' INTEGER,'pobatkovi' TEXT,'posady' TEXT,'prizvysche' TEXT,'rikvstupu' INTEGER,'rikvypusku' INTEGER,	'specialnist' TEXT,	'version_id' INTEGER PRIMARY KEY)");
+			statement.execute("create table if not exists 'tokens' ('user_id' INTEGER, 'token' TEXT)");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +62,7 @@ public class DBAPI {
 	}
 	public Bratchyk getBratchyk(long id){
 		Bratchyk bratchyk = null;
-		ResultSet set = getBratchykSet(null, BRATCHYKSACTIVEBYID);
+		ResultSet set = getBratchykSet(id, BRATCHYKSACTIVEBYID);
 		try {
 			if(set.next()){
 				bratchyk= currentBratchyk(set);
@@ -71,6 +71,7 @@ public class DBAPI {
 		return bratchyk;
 	}
 	public boolean setBratchyk(Bratchyk bratchyk, long id){
+		disableVersion(id);
 		bratchyk.id = id;
 		try {
 			return addVersion(bratchyk);
@@ -129,11 +130,23 @@ public class DBAPI {
 	public LoginResult addUser(User user){
 		Long id = generateID() ;
 		try{
-			PreparedStatement statement = con.prepareStatement("INSERT INTO 'users' VALUES(?, ?, ?, ?, ?, ?)");
-			statement.setString(1, user.email);
-			statement.setLong(2, id);
-			statement.setString(3, user.name);
-			statement.setString(4, user.passhash);
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'users' VALUES(?, ?, ?, ?, ?)");
+			if (user.email!=null)
+				statement.setString(1, user.email);
+			else
+				statement.setNull(1, java.sql.Types.VARCHAR);
+			if (id!=null)
+				statement.setLong(2, id);
+			else
+				statement.setNull(2, java.sql.Types.INTEGER);
+			if (user.name!=null)
+				statement.setString(3, user.name);
+			else
+				statement.setNull(3, java.sql.Types.VARCHAR);
+			if (user.passhash!=null)
+				statement.setString(4, user.passhash);
+			else
+				statement.setNull(4, java.sql.Types.VARCHAR);
 			statement.setInt(5, currentPermission());
 			statement.execute();
 			statement.close();
@@ -192,7 +205,7 @@ public class DBAPI {
 		if (access_token.isEmpty())
 			return Permissions.GUEST;
 		try{
-			PreparedStatement statement = con.prepareStatement("SELECT * FROM users WHERE token="+access_token);
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM tokens WHERE token='"+access_token+"'");
 			ResultSet set = statement.executeQuery();
 			return getUser(set.getLong("user_id")).permission;
 		}catch (SQLException e){
@@ -281,24 +294,70 @@ public class DBAPI {
 			if (!resultSet.next()) return false;
 		}
 		try{
-			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyky' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			statement.setDate(1, version.dataankety);
-			statement.setDate(2, version.datanarodzhennia);
-			statement.setDate(3, version.dataopatronennia);
-			statement.setDate(4, version.dataposhanuvannia);
-			statement.setDate(5, new Date(System.currentTimeMillis()));
-			statement.setDate(6, version.datavysviaty);
-			statement.setLong(7, version.id);
-			statement.setString(8, version.imya);
-			statement.setString(9, version.kontakty);
-			statement.setLong(10, version.patron_id);
-			statement.setString(11, version.pobatkovi);
-			statement.setString(12, version.posady);
-			statement.setString(13, version.prizvysche);
-			statement.setInt(14, version.rikvstupu);
-			statement.setInt(15, version.rikvypusku);
-			statement.setString(16, version.specialnist);
-			statement.setLong(17, generateID());
+			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyky' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			statement.setInt(1, 1);
+			if (version.dataankety!=null)
+				statement.setDate(2, version.dataankety);
+			else
+				statement.setNull(2, java.sql.Types.DATE);
+			if (version.datanarodzhennia!=null)
+				statement.setDate(3, version.datanarodzhennia);
+			else
+				statement.setNull(3, java.sql.Types.DATE);
+			if (version.dataopatronennia!=null)
+				statement.setDate(4, version.dataopatronennia);
+			else
+				statement.setNull(4, java.sql.Types.DATE);
+			if (version.dataposhanuvannia!=null)
+				statement.setDate(5, version.dataposhanuvannia);
+			else
+				statement.setNull(5, java.sql.Types.DATE);
+			statement.setDate(6, new Date(System.currentTimeMillis()));
+			if (version.datavysviaty!=null)
+				statement.setDate(7, version.datavysviaty);
+			else
+				statement.setNull(7, java.sql.Types.DATE);
+			if (version.id!=null)
+				statement.setLong(8, version.id);
+			else
+				statement.setNull(8, java.sql.Types.INTEGER);
+			if (version.imya!=null)
+				statement.setString(9, version.imya);
+			else
+				statement.setNull(9, java.sql.Types.VARCHAR);
+			if (version.kontakty!=null)
+				statement.setString(10, version.kontakty);
+			else
+				statement.setNull(10, java.sql.Types.VARCHAR);
+			if (version.patron_id!=null)
+				statement.setLong(11, version.patron_id);
+			else
+				statement.setNull(11, java.sql.Types.INTEGER);
+			if (version.pobatkovi!=null)
+				statement.setString(12, version.pobatkovi);
+			else
+				statement.setNull(12, java.sql.Types.VARCHAR);
+			if (version.posady!=null)
+				statement.setString(13, version.posady);
+			else
+				statement.setNull(13, java.sql.Types.VARCHAR);
+			if (version.prizvysche!=null)
+				statement.setString(14, version.prizvysche);
+			else
+				statement.setNull(14, java.sql.Types.VARCHAR);
+			if (version.rikvstupu!=null)
+				statement.setInt(15, version.rikvstupu);
+			else
+				statement.setNull(15, java.sql.Types.INTEGER);
+			if (version.rikvypusku!=null)
+				statement.setInt(16, version.rikvypusku);
+			else
+				statement.setNull(16, java.sql.Types.INTEGER);
+			if (version.specialnist!=null)
+				statement.setString(17, version.specialnist);
+			else
+				statement.setNull(17, java.sql.Types.VARCHAR);
+			statement.setLong(18, generateID());
 			statement.execute();
 			statement.close();
 		}catch (SQLException e){
@@ -359,13 +418,22 @@ public class DBAPI {
 		try{
 			switch (mode) {
 			case BRATCHYKSACTIVEBYID:
-				query = "SELECT * FROM bratchyky WHERE actual=1 AND id = "+id;
+				if (id==null)
+					query = "SELECT * FROM bratchyky WHERE id IS NULL";
+				else
+					query = "SELECT * FROM bratchyky WHERE id = "+id;
 				break;
 			case BRATCHYKSALLBYID:
-				query = "SELECT * FROM bratchyky WHERE id = "+id;
+				if (id==null)
+					query = "SELECT * FROM bratchyky WHERE id IS NULL";
+				else
+					query = "SELECT * FROM bratchyky WHERE id = "+id;
 				break;
 			case BRATCHYKSACTIVEBYPATRON:
-				query = "SELECT * FROM bratchyky WHERE patron_id = "+id;
+				if (id==null)
+					query = "SELECT * FROM bratchyky WHERE patron_id IS NULL";
+				else
+					query = "SELECT * FROM bratchyky WHERE patron_id = "+id;
 				break;
 			default:
 				throw new IllegalArgumentException();
