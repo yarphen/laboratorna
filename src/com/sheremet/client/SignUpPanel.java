@@ -20,13 +20,15 @@ import com.sheremet.utils.User;
 public class SignUpPanel extends JPanel {
 	private DBSecureAPI api; 
 	public static void main(String[] args) throws UnknownHostException, IOException {
-//		JFrame frame = new JFrame("Sign up for Spydei bratstvo");
-//		frame.setSize(300, 150);
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		ClientConnection connection = new ClientConnection();
-//		SignInPanel in = new SignInPanel(connection );
+		JFrame frame = new JFrame("Sign up for Spydei bratstvo");
+		frame.setSize(300, 150);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ClientConnection connection = new ClientConnection();
+		DBSecureAPI api = new DBSecureAPI(connection);
+		SignInPanel in = new SignInPanel(api, new ClientFrame(connection, null, api) );
 //		in.placeComponents(frame);
-//		frame.setVisible(true);
+		frame.add(in);
+		frame.setVisible(true);
 	}
 	public SignUpPanel(DBSecureAPI api2, final ClientFrame clientFrame) {
 		api=api2;
@@ -75,17 +77,9 @@ public class SignUpPanel extends JPanel {
 				map.put("passhash", DBAPI.md5(new String(passwordText.getPassword())));
 				LoginResult loginResult = api.addUser(new User(map));
 				if (loginResult!=null&&!loginResult.getAccess_token().isEmpty()){
-					new Thread(new  Runnable() {
-						public void run() {
-							javax.swing.JOptionPane.showMessageDialog(null, "Successfull!");
-						}
-					}).start();
+					clientFrame.showMessage("Successful!");
 				}else{
-					new Thread(new  Runnable() {
-						public void run() {
-							javax.swing.JOptionPane.showMessageDialog(null, "Failed!");
-						}
-					}).start();
+					clientFrame.showMessage("Failed!");
 				}
 			}
 
