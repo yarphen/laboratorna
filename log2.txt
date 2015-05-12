@@ -1,0 +1,34 @@
+ApiTester [Java Application]	
+	com.sheremet.tests.ApiTester at localhost:56009	
+		Thread [main] (Suspended)	
+			waiting for: ClientConnection  (id=31)	
+			Object.wait(long) line: not available [native method]	
+			ClientConnection(Object).wait() line: not available	
+			Command.send(ClientConnection) line: 51	
+			DBSecureAPI.addBratchyk(Bratchyk) line: 173	
+			ApiTester.main(String[]) line: 25	
+		Thread [Thread-0] (Suspended)	
+			owns: SocksSocketImpl  (id=38)	
+			DualStackPlainSocketImpl.accept0(int, InetSocketAddress[]) line: not available [native method]	
+			DualStackPlainSocketImpl.socketAccept(SocketImpl) line: not available	
+			DualStackPlainSocketImpl(AbstractPlainSocketImpl).accept(SocketImpl) line: not available	
+			SocksSocketImpl(PlainSocketImpl).accept(SocketImpl) line: not available	
+			ServerSocket.implAccept(Socket) line: not available	
+			ServerSocket.accept() line: not available	
+			ServerConnection.run() line: 17	
+		Thread [Thread-2] (Suspended)	
+			owns: InputStreamReader  (id=47)	
+			SocketInputStream.socketRead0(FileDescriptor, byte[], int, int, int) line: not available [native method]	
+			SocketInputStream.socketRead(FileDescriptor, byte[], int, int, int) line: not available	
+			SocketInputStream.read(byte[], int, int, int) line: not available	
+			SocketInputStream.read(byte[], int, int) line: not available	
+			StreamDecoder.readBytes() line: not available	
+			StreamDecoder.implRead(char[], int, int) line: not available	
+			StreamDecoder.read(char[], int, int) line: not available	
+			InputStreamReader.read(char[], int, int) line: not available	
+			InputStreamReader(Reader).read(CharBuffer) line: not available	
+			Scanner.readInput() line: not available	
+			Scanner.findWithinHorizon(Pattern, int) line: not available	
+			Scanner.hasNextLine() line: not available	
+			ServerSocketThread.run() line: 23	
+	C:\Program Files\Java\jre1.8.0_45\bin\javaw.exe (May 11, 2015, 2:22:27 AM)	
