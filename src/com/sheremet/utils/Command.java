@@ -13,6 +13,7 @@ public class Command {
 	public Command(HashMap<String, Object> map) throws Exception {
 		String commandtype = (String) map.get("act");
 		switch (commandtype) {
+		case 	"logOut": type = Commands.logOut;break;
 		case 	"login": type = Commands.login;break;
 		case	"getBratchykChildren":type = Commands.getBratchykChildren;break;
 		case	"getHeadBratchyks":type = Commands.getHeadBratchyks;break;
@@ -22,6 +23,7 @@ public class Command {
 		case	"getUser":type = Commands.getUser;break;
 		case	"setBratchyk":type = Commands.setBratchyk;break;
 		case	"setUser":type = Commands.setUser;break;
+		case	"setUserPermission":type = Commands.setUserPermission;break;
 		case	"addUser":type = Commands.addUser;break;
 		case	"addBratchyk":type = Commands.addBratchyk;break;
 		case	"deleteBratchyk":type = Commands.deleteBratchyk;break;
