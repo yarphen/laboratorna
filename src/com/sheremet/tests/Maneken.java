@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.sql.Date;
 import java.util.Random;
 
+import com.sheremet.server.DBAPI;
 import com.sheremet.utils.Bratchyk;
 import com.sheremet.utils.User;
 
@@ -20,7 +21,7 @@ public class Maneken {
 		bratchyk.id =getLong();
 		bratchyk.imya = getString("IM'YA:");
 		bratchyk.kontakty = getString("KONTAKTY:");
-		bratchyk.patron_id =null;
+		bratchyk.patron_id =431538609040449L;
 		bratchyk.pobatkovi = getString("POBATKOVI:");
 		bratchyk.posady = getString("POSADY:");
 		bratchyk.prizvysche = getString("PRIZVYSHCHE:");
@@ -32,10 +33,10 @@ public class Maneken {
 	}
 	public static User getUser() {
 		User user = new User();
-		user.email = getString("EMAIL:");
+		user.email = "email";
 		user.id = getLong();
 		user.name = getString("NAME:");
-		user.passhash = getString("PASSHASH:");
+		user.passhash = DBAPI.md5("qwerty");
 		user.permission = getInt();
 		return user;
 	}
