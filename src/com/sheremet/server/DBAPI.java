@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Random;
 
 import com.sheremet.utils.Bratchyk;
 import com.sheremet.utils.LoginResult;
@@ -123,8 +124,8 @@ public class DBAPI {
 	public boolean deleteBratchyk(long id) {
 		return disableVersion(id);
 	}
-	public boolean deleteBratchykHistory(long id, long part ) {
-		return delVersion(id, part);
+	public boolean deleteBratchykHistory(long id, Long long1 ) {
+		return delVersion(id, long1);
 	}
 
 	public LoginResult addUser(User user){
@@ -291,7 +292,7 @@ public class DBAPI {
 	private boolean addVersion(Bratchyk version) throws SQLException{
 		if (version.patron_id!=null){
 			ResultSet resultSet = getBratchykSet(version.patron_id, BRATCHYKSACTIVEBYPATRON);
-			if (!resultSet.next()) return false;
+			if (!resultSet.next()) version.patron_id=null;
 		}
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO 'bratchyky' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -357,7 +358,7 @@ public class DBAPI {
 				statement.setString(17, version.specialnist);
 			else
 				statement.setNull(17, java.sql.Types.VARCHAR);
-			statement.setLong(18, generateID());
+			statement.setInt(18, new Random().nextInt());
 			statement.execute();
 			statement.close();
 		}catch (SQLException e){
@@ -367,7 +368,7 @@ public class DBAPI {
 	}
 	private boolean delVersion(long id, long version_id){
 		try{
-			PreparedStatement statement = con.prepareStatement("DELETE FROM 'teachers' WHERE version_id="+version_id+" AND id="+id);
+			PreparedStatement statement = con.prepareStatement("DELETE FROM 'bratchyky' WHERE version_id="+version_id+" AND id="+id);
 			statement.execute();
 			return true;
 		}catch (SQLException e){
@@ -376,7 +377,7 @@ public class DBAPI {
 	}
 	private boolean disableVersion(long id){
 		try{
-			PreparedStatement statement = con.prepareStatement("UPDATE bratshyky SET actual = 0 WHERE actual=1 AND id=" + id);
+			PreparedStatement statement = con.prepareStatement("UPDATE bratchyky SET actual = 0 WHERE actual=1 AND id=" + id);
 			statement.execute();
 			ResultSet resultSet = getBratchykSet(id, BRATCHYKSACTIVEBYPATRON);
 			while(resultSet.next()){
@@ -455,8 +456,8 @@ public class DBAPI {
 			messageDigest.update(st.getBytes());
 			digest = messageDigest.digest();
 		} catch (NoSuchAlgorithmException e) {
-			// тут можно обработать ошибку
-			// возникает она если в передаваемый алгоритм в getInstance(,,,) не существует
+			// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ getInstance(,,,) пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			e.printStackTrace();
 		}
 

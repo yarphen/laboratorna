@@ -3,6 +3,9 @@ package com.sheremet.tests;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
+import com.sheremet.client.BratchykViewPanel;
 import com.sheremet.client.ClientConnection;
 import com.sheremet.client.DBSecureAPI;
 import com.sheremet.server.ServerStarter;
@@ -27,11 +30,11 @@ public class ApiTester {
 					break;
 				case 1:o=api.addUser(Maneken.getUser());
 					break;
-				case 2:o=api.deleteBratchyk(Maneken.getLong());
+				case 2:o=api.deleteBratchyk(431532377515259L);
 					break;
-				case 3:o=api.deleteBratchykHistory(Maneken.getLong(), Maneken.getInt());
+				case 3:o=api.deleteBratchykHistory(431532377515259L, 431532377515729L);
 					break;
-				case 4:o=api.deleteUser(Maneken.getLong());
+				case 4:o=api.deleteUser(431533521015864L);
 					break;
 				case 5:o=api.getBratchyk(431370869118022L);//Maneken.getLong());
 					break;
@@ -59,6 +62,11 @@ public class ApiTester {
 				default:
 					break;
 				}
+				JFrame frame = new JFrame();
+				frame.setVisible(true);
+				BratchykViewPanel panel = new BratchykViewPanel(true);
+				frame.add(panel);
+				panel.load
 				System.err.println(o);
 			}
 

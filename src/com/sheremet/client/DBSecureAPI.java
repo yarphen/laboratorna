@@ -8,7 +8,7 @@ import com.sheremet.utils.LoginResult;
 import com.sheremet.utils.User;
 
 public class DBSecureAPI {
-	private String access_token="";
+	private String access_token="3aa39d0c9c4c8dff9bead5ac50bb325b23989ed8016c468f68a0dc024bb323c546361eac4d646d8ade682ba261ee1226";
 	private User user;
 	private ClientConnection connection;
 	private ClientFrame clientFrame;
@@ -228,7 +228,7 @@ public class DBSecureAPI {
 			throw new ServerException((String)command.send(connection));
 		}
 	}
-	public boolean deleteBratchykHistory(long id, int part) throws ServerException {
+	public boolean deleteBratchykHistory(long id, long part) throws ServerException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "deleteBratchykHistory");
 		map.put("access_token", access_token);

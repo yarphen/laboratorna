@@ -27,7 +27,7 @@ public class CommandExecutor {
 		}
 		case deleteBratchykHistory:
 		{
-			return api.deleteBratchykHistory((Long)command.getMapElement("id"), (Integer)command.getMapElement("part"));
+			return api.deleteBratchykHistory((Long)command.getMapElement("id"), (Long)command.getMapElement("part"));
 		}
 		case deleteUser:
 		{
