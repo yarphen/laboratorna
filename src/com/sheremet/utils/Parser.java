@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -74,53 +76,90 @@ public class Parser {
 		}
     	Element e = document.getDocumentElement();
 		if (e.getTagName().equals("command")){
+			NodeList nl=e.getChildNodes();
+			HashSet  hs=new HashSet<String>();
 			switch (e.getAttribute("type")) {
 			case "login":
-				
+				hs.add("act");
+				hs.add("login");
+				hs.add("password");
 				break;
 			case "getBratchykChildren":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
 				break;
 			case "getHeadBratchyks":
-				
+				hs.add("act");
+				hs.add("access_token");
 				break;
 			case "getBratchyk":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
 				break;
 			case "getBratchykHistory":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
 				break;
 			case "getUserList":
-				
+				hs.add("act");
+				hs.add("access_token");
 				break;
 			case "getUser":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
 				break;
 			case "setBratchyk":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("bratchyk");
+				hs.add("id");
 				break;
 			case "setUser":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("user");
+				hs.add("id");
 				break;
 			case "addUser":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("user");
 				break;
 			case "addBratchyk":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("bratchyk");
 				break;
 			case "deleteBratchyk":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
 				break;
 			case "deleteBratchykHistory":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
+				hs.add("part");
 				break;
 			case "deleteUser":
-				
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
+				break;
+			case "setUserPermission":
+				hs.add("act");
+				hs.add("access_token");
+				hs.add("id");
+				hs.add("permission");
 				break;
 			case "logout":
-				
+				hs.add("act");
+				hs.add("access_token");
 				break;
-
 			default:
 				break;
 				
