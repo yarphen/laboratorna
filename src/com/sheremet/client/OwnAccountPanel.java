@@ -9,13 +9,14 @@ public class OwnAccountPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = -6358870323043639245L;
-	private JLabel labelName;
-	private JLabel labelEmail;
-	private JLabel labelPermission;
-	private JLabel labelChangePassword;
-	private JPasswordField fieldOld;
-	private JPasswordField fieldNew;
-	private JPasswordField fieldConfirm;
+	private JLabel labelName = new JLabel("labelName"
+			+ "");
+	private JLabel labelEmail = new JLabel("labelEmail");
+	private JLabel labelPermission = new JLabel("labelPermission");
+	private JLabel labelChangePassword = new JLabel("labelChangePassword");
+	private JPasswordField fieldOld = new JPasswordField("fieldOld");
+	private JPasswordField fieldNew = new JPasswordField("fieldNew");
+	private JPasswordField fieldConfirm = new JPasswordField("fieldConfirm");
 	public OwnAccountPanel(DBSecureAPI api) {
 		add(fieldConfirm);
 		add(fieldNew);

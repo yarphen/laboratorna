@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,7 +22,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -66,106 +64,93 @@ public class Parser {
 
 	public static HashMap<String, Object> parseXMLtoCommandHashMap(String string) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		Set<String> set = new HashSet<String>();
 
-    	Document document = null;
+		Document document = null;
 		try {
 			document = builder.parse(new ByteArrayInputStream(string.getBytes()));
 		} catch (SAXException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-    	Element e = document.getDocumentElement();
+		Element e = document.getDocumentElement();
 		if (e.getTagName().equals("command")){
-			NodeList nl=e.getChildNodes();
-			HashSet  hs=new HashSet<String>();
-			switch (e.getAttribute("type")) {
+			String type = e.getAttribute("type");
+
+			map.put("act", type) ;
+			switch (type) {
 			case "login":
-				hs.add("act");
-				hs.add("login");
-				hs.add("password");
+				set.add("login");
+				set.add("password");
 				break;
 			case "getBratchykChildren":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
+				set.add("access_token");
+				set.add("id");
 				break;
 			case "getHeadBratchyks":
-				hs.add("act");
-				hs.add("access_token");
+				set.add("access_token");
 				break;
 			case "getBratchyk":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
+				set.add("access_token");
+				set.add("id");
 				break;
 			case "getBratchykHistory":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
+				set.add("access_token");
+				set.add("id");
 				break;
 			case "getUserList":
-				hs.add("act");
-				hs.add("access_token");
+				set.add("access_token");
 				break;
 			case "getUser":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
+				set.add("access_token");
+				set.add("id");
 				break;
 			case "setBratchyk":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("bratchyk");
-				hs.add("id");
+				set.add("access_token");
+				set.add("bratchyk");
+				set.add("id");
 				break;
 			case "setUser":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("user");
-				hs.add("id");
+				set.add("access_token");
+				set.add("user");
+				set.add("id");
 				break;
 			case "addUser":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("user");
+				set.add("access_token");
+				set.add("user");
 				break;
 			case "addBratchyk":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("bratchyk");
+				set.add("access_token");
+				set.add("bratchyk");
 				break;
 			case "deleteBratchyk":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
+				set.add("access_token");
+				set.add("id");
 				break;
 			case "deleteBratchykHistory":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
-				hs.add("part");
+				set.add("access_token");
+				set.add("id");
+				set.add("part");
 				break;
 			case "deleteUser":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
+				set.add("access_token");
+				set.add("id");
 				break;
 			case "setUserPermission":
-				hs.add("act");
-				hs.add("access_token");
-				hs.add("id");
-				hs.add("permission");
+				set.add("access_token");
+				set.add("id");
+				set.add("permission");
 				break;
 			case "logout":
-				hs.add("act");
-				hs.add("access_token");
+				set.add("access_token");
 				break;
 			default:
 				break;
-				
+
 			}
 		}
-		return null;
+		map.putAll(mapFromParams(e.getChildNodes(), set));
+		return map;
 	}
 
 	public static String unparseXMLfromCommandHashMap(Commands type, HashMap<String, Object> map) {
@@ -200,8 +185,39 @@ public class Parser {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document document = db.newDocument();
+		Element main = elementFromObject(document, o);
+		try {
+			return unparseElement(document, main);
+		} catch (TransformerException e) {
+			return null;
+		}
+	}
+	private static HashMap<String, Object> mapFromParams(NodeList list,  Set<String> names) {
+		HashMap<String, Object> map = new  HashMap<String, Object> ();
+		for (int i=0; i<list.getLength(); i++){
+			Element element = (Element) list.item(i);
+			try {
+				String name = element.getAttribute("name");
+				if (names.contains(name)){
+					map.put(name, parseObject((Element) element.getFirstChild()));
+				}
+			} catch (Exception e1) {}
+		}
+		return map;
+	}
+	private static Element elementFromHashMap(Document document, Element head, HashMap<String, Object> map) {
+		Set<String> set = map.keySet();
+		for (String s: set){
+			Element e = paramElement(document, s);
+			Element inner = elementFromObject(document, map.get(s));
+			e.appendChild(inner);
+			head.appendChild(e);
+		}
+		return head;
+	}
+	private static Element elementFromObject(Document document, Object o) {
 		Element main = null;
-		if (o==null){
+		if (o!=null){
 			String oType = o.getClass().getName();
 			switch (oType) {
 
@@ -235,6 +251,22 @@ public class Parser {
 				main = elementFromString(document, string);
 			}
 			break;
+			case "java.lang.Long":{
+				Long  long1 = (Long) o;
+				main = elementFromLong(document, long1);
+			}
+			break;
+
+			case "java.sql.Date":{
+				Date  date = (Date) o;
+				main = elementFromDate(document, date);
+			}
+			break;
+			case "java.lang.Integer":{
+				Integer  integer = (Integer) o;
+				main = elementFromInt(document, integer);
+			}
+			break;
 			case "com.sheremet.utils.LoginResult":{
 				LoginResult  loginResult = (LoginResult) o;
 				main = elementFromLoginResult(document, loginResult);
@@ -244,32 +276,9 @@ public class Parser {
 		}else {
 			main = elementFromString(document, "Error!");
 		}
-		try {
-			return unparseElement(document, main);
-		} catch (TransformerException e) {
-			return null;
-		}
+		return main;
 	}
-	private static HashMap<String, Object> mapFromParams(NodeList list,  Set<String> names) {
-		HashMap<String, Object> map = new  HashMap<String, Object> ();
-		for (int i=0; i<list.getLength(); i++){
-			Element element = (Element) list.item(i);
-			try {
-				String name = element.getAttribute("name");
-				if (names.contains(name)){
-					map.put(name, parseObject((Element) element.getFirstChild()));
-				}
-			} catch (Exception e1) {}
-		}
-		return map;
-	}
-	private static Element elementFromHashMap(Document document, Element head, HashMap<String, Object> map) {
-		Set<String> set = map.keySet();
-		for (String s: set){
-			head.appendChild(paramElement(document, s));
-		}
-		return head;
-	}
+
 	private static String unparseElement(Document document, Element element) throws TransformerException{
 		document.appendChild(element);
 		TransformerFactory tf = TransformerFactory.newInstance();
@@ -321,12 +330,14 @@ public class Parser {
 		return null;
 	}
 	private static Element elementFromBoolean(Document document, Boolean bool) {
+		if (bool==null)return elementFromNull(document);
 		Element element = document.createElement("boolean");
 		element.setTextContent(bool.toString());
 		return element;
 	}
 
 	private static Element elementFromUser(Document document, User user){
+		if (user==null)return elementFromNull(document);
 		Element element = document.createElement("user");
 		Element email = paramElement(document, "email");
 		email.appendChild(elementFromString(document, user.email));
@@ -347,6 +358,7 @@ public class Parser {
 	}
 
 	private static Element elementFromUserArray(Document document, User[] users){
+		if (users==null)return elementFromNull(document);
 		Element element = document.createElement("userarray");
 		for (User user: users){
 			element.appendChild(elementFromUser(document, user));
@@ -354,6 +366,7 @@ public class Parser {
 		return element;
 	}
 	private static Element elementFromBratchyk(Document document, Bratchyk bratchyk){
+		if (bratchyk==null)return elementFromNull(document);
 		Element element = document.createElement("bratchyk");
 		Element dataankety = paramElement(document, "dataankety");
 		dataankety.appendChild(elementFromDate(document, bratchyk.dataankety));
@@ -409,6 +422,7 @@ public class Parser {
 		return element;
 	}
 	private static Element elementFromBratchykArray(Document document, Bratchyk[] bratchyks){
+		if (bratchyks==null)return elementFromNull(document);
 		Element element = document.createElement("bratchykarray");
 		for (Bratchyk bratchyk2: bratchyks){
 			element.appendChild(elementFromBratchyk(document, bratchyk2));
@@ -417,6 +431,7 @@ public class Parser {
 	}
 	@SuppressWarnings("deprecation")
 	private static Element elementFromDate(Document document, Date date){
+		if (date==null)return elementFromNull(document);
 		Element element = document.createElement("date");
 		element.setAttribute("year", ""+date.getYear());
 		element.setAttribute("month", ""+date.getMonth());
@@ -426,26 +441,36 @@ public class Parser {
 	}
 
 	private static Element elementFromLong(Document document, Long long1){
+		if (long1==null)return elementFromNull(document);
 		Element element = document.createElement("long");
 		element.setTextContent(long1+"");
 		return element;
 	}
 	private static Element elementFromString(Document document, String string){
+		if (string==null)return elementFromNull(document);
 		Element element = document.createElement("string");
 		element.setTextContent(string);
 		return element;
 	}
 	private static Element elementFromLoginResult(Document document,  LoginResult result){
+		if (result==null)return elementFromNull(document);
 		Element element = document.createElement("loginresult");
-		Element token = elementFromString(document, result.getAccess_token());
-		Element user = elementFromUser(document, result.getUser());
+		Element token = paramElement(document, "token");
+		token.appendChild(elementFromString(document, result.getAccess_token()));
+		Element user = paramElement(document, "user");
+		user.appendChild(elementFromUser(document, result.getUser()));
 		element.appendChild(token);
 		element.appendChild(user);
 		return element;
 	}
 	private static Element elementFromInt(Document document, Integer int1) {
+		if (int1==null)return elementFromNull(document);
 		Element element = document.createElement("int");
 		element.setTextContent(int1+"");
+		return element;
+	}
+	private static Element elementFromNull(Document document) {
+		Element element = document.createElement("null");
 		return element;
 	}
 	private static Element paramElement(Document document, String name){
@@ -510,6 +535,9 @@ public class Parser {
 					break;
 				case "pobatkovi":
 					map.put("pobatkovi", parseString((Element) element.getFirstChild()));
+					break;
+				case "posady":
+					map.put("posady", parseString((Element) element.getFirstChild()));
 					break;
 				case "rikvstupu":
 					map.put("rikvstupu", parseInt((Element) element.getFirstChild()));
@@ -627,8 +655,20 @@ public class Parser {
 	}
 	private static LoginResult parseLoginResult(Element element){
 		if (element.getTagName()=="loginresult"){
-			String token = parseString((Element) element.getChildNodes().item(0));
-			User user = parseUser((Element) element.getChildNodes().item(1));
+			NodeList list = element.getChildNodes();
+			String token = null;
+			User user = null;
+			for (int i=0; i<list.getLength(); i++){
+				Element e = (Element) list.item(i);
+				if (!e.getTagName().equals("param")) continue;
+				String elementName = element.getAttribute("name");
+				switch (elementName) {
+				case "token":token= parseString((Element) element.getFirstChild());
+				break;				
+				case "user": user= parseUser((Element) element.getFirstChild());
+				break;
+				}
+			}
 			return new LoginResult(token, user);
 		}else{
 			return null;

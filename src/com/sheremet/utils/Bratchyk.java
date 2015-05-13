@@ -6,12 +6,23 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Bratchyk {
-	public Bratchyk(HashMap<String, Object> map) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException{
+	public Bratchyk(HashMap<String, Object> map){
 		Class<Bratchyk> bratchykClass = Bratchyk.class;
 		Set<String> set = map.keySet();
 		for (String s:set){
-			Field f = bratchykClass.getField(s);
-			f.set(this, map.get(s));
+			Field f = null;
+			try {
+				f = bratchykClass.getField(s);
+			} catch (NoSuchFieldException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				f.set(this, map.get(s));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	public Bratchyk(Bratchyk b) {
@@ -56,5 +67,8 @@ public class Bratchyk {
 	public Integer rikvypusku;
 	public String specialnist;
 	public Long version_id;//private
-	
+	@Override
+	public String toString() {
+		return prizvysche+" "+imya+" "+pobatkovi;
+	}
 }

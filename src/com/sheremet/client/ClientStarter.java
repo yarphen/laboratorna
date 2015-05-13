@@ -12,6 +12,9 @@ public class ClientStarter {
 		try{
 			connection = new ClientConnection();
 		}catch(Exception e){}
+		DBSecureAPI api = new DBSecureAPI(connection);
 		clientFrame = new ClientFrame(connection, this, api);
+		api.setClientFrame(clientFrame);
+		clientFrame.setMode(0);
 	}
 }

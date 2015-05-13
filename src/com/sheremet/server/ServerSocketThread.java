@@ -10,8 +10,8 @@ import com.sheremet.utils.Parser;
 
 public class ServerSocketThread extends Thread{
 	private Socket socket;
-	private DBAPI api;
-	private SecurityManager manager;
+	private DBAPI api = new DBAPI();
+	private SecurityManager manager = new SecurityManager(api);
 	public ServerSocketThread(Socket socket) {
 		this.socket=socket;
 	}
@@ -20,13 +20,14 @@ public class ServerSocketThread extends Thread{
 		try{
 			Scanner scanner = new Scanner(socket.getInputStream());
 			PrintWriter writer = new PrintWriter(socket.getOutputStream());
+			writer.flush();
 			while (scanner.hasNextLine()){
 				String string = scanner.nextLine();
 				System.out.println(string);
 				Command command = new Command(Parser.parseXMLtoCommandHashMap(string));
 				writer.println(Parser.unparseXMLfromResultObject(command.execute(manager)));
+				writer.flush();
 			}
-			scanner.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{

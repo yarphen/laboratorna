@@ -23,7 +23,8 @@ public class SignInPanel extends JPanel{
 //		in.placeComponents(frame);
 //		frame.setVisible(true);
 	}
-	public SignInPanel(DBSecureAPI api2, ClientFrame clientFrame) {
+	public SignInPanel(DBSecureAPI api2, final ClientFrame clientFrame) {
+		api=api2;
 		JLabel userLabel = new JLabel("User");
 		userLabel.setBounds(10, 10, 80, 25);
 		add(userLabel);
@@ -48,7 +49,11 @@ public class SignInPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				api.login(userText.getText(), new String(passwordText.getPassword()));
+				try {
+					api.login(userText.getText(), new String(passwordText.getPassword()));
+				} catch (ServerException e1) {
+					clientFrame.showMessage(e1.getMessage()+": "+e1.getLocalizedMessage());
+				}
 			}
 			
 		};
