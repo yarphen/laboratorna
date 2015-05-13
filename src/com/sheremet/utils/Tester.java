@@ -16,12 +16,16 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
+import com.sheremet.client.BratchykViewPanel;
+import com.sheremet.tests.Maneken;
+
 public class Tester {
 
 		public static void main(String[] args) {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			BratchykViewPanel bp=new BratchykViewPanel(Maneken.getBratchyk(), true);
+			//DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			//String xml = "<xml><g>a</g><h><j t='' y='12' /></h></xml>";
-			String xml="<command><type>getBratchykChildren</type><args><arg name=\"id\" value=\"\" type=\"long\"/></args></command>	";
+			/*String xml="<command><type>getBratchykChildren</type><args><arg name=\"id\" value=\"\" type=\"long\"/></args></command>	";
 	        try {
 	        	DocumentBuilder db = dbf.newDocumentBuilder();
 	        	Document document = db.parse(new ByteArrayInputStream(xml.getBytes()));
@@ -34,14 +38,13 @@ public class Tester {
 	        	String output = writer.getBuffer().toString();//.replaceAll("\n|\r", "");
 	        	document.getDocumentElement().getNodeName();
 	        	//System.out.println(Parser.loadXMLFromString(xml));
-	        	
-	        	
+	        		        	
 	        	
 	        	
 	        	
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	        }
+	        }*/
 		}
 //	public static void main(String[] args) {
 //		Runnable runnable = new Runnable() {
