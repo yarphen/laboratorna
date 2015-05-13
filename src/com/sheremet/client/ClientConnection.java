@@ -30,12 +30,9 @@ public class ClientConnection extends Thread{
 		start();
 	}
 	public void send(String command, StringResultHandler handler){
-		
+
 		command = to1line(command);
 		queue.add(new Node(command, handler));
-		synchronized (this) {
-			notify();
-		}
 	}
 	private static String to1line(String command) {
 		command=command.replace("\n", " ");
@@ -44,35 +41,17 @@ public class ClientConnection extends Thread{
 	}
 	@Override
 	public void run() {
-		synchronized (this) {
 			while(true){
-
-				while (!queue.isEmpty()){
-					Node node = null;
-					try {
-						node = queue.take();
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
+				try {
+					Node node = queue.take();
 					writer.println(node.command);
 					writer.flush();
-					try {
-						node.handler.handle(scanner.nextLine());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					node.handler.handle(scanner.nextLine());
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				try{
-					wait();
-				}catch(InterruptedException e1){
-
-				}
+				
 			}
-		}
-		
-	}
-	public static PreparedStatement prepeareStatement(String string) {
-		// TODO Auto-generated method stub
-		return null;
+
 	}
 }
