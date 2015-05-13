@@ -15,6 +15,9 @@ public class Bratchyk {
 		}
 	}
 	public Bratchyk(Bratchyk b) {
+		prizvysche = b.prizvysche;
+		imya = b.imya;
+		pobatkovi = b.pobatkovi;
 		dataankety = b.dataankety;
 		datanarodzhennia = b.datanarodzhennia;
 		dataopatronennia = b.dataopatronennia;
@@ -22,12 +25,12 @@ public class Bratchyk {
 		dataversii=b.dataversii;
 		datavysviaty = b.datavysviaty;
 		id = b.id;
-		imya = b.imya;
+		
 		kontakty = b.kontakty;
 		patron_id = b.patron_id;
-		pobatkovi = b.pobatkovi;
+		
 		posady = b.posady;
-		prizvysche = b.prizvysche;
+		
 		rikvstupu = b.rikvstupu;
 		rikvypusku = b.rikvypusku;
 		specialnist = b.specialnist;

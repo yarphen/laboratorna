@@ -14,11 +14,10 @@ public class TreeViewPanel extends JPanel{
 	private JPanel bratchykView;
 	private Object[] root;
 	public TreeViewPanel(DBSecureAPI api){ 
-		
 		setName("Name");
 		setSize(WIDTH, HEIGHT);
 		String result = "";
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Корінь");
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("пїЅпїЅпїЅпїЅпїЅ");
 		Object data = null;
 		DefaultMutableTreeNode d = new DefaultMutableTreeNode(data);
 		root.add(d);
