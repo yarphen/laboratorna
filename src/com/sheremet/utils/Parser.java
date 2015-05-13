@@ -168,8 +168,6 @@ public class Parser {
 
 	public static Object parseXMLtoResultObject(String s) throws Exception{
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder= factory.newDocumentBuilder();
 			InputSource is = new InputSource(new StringReader(s));
 			Document doc = builder.parse(is);
 
@@ -182,9 +180,7 @@ public class Parser {
 	}
 
 	public static String unparseXMLfromResultObject(Object o) throws ParserConfigurationException {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		Document document = db.newDocument();
+		Document document = builder.newDocument();
 		Element main = elementFromObject(document, o);
 		try {
 			return unparseElement(document, main);
@@ -661,11 +657,11 @@ public class Parser {
 			for (int i=0; i<list.getLength(); i++){
 				Element e = (Element) list.item(i);
 				if (!e.getTagName().equals("param")) continue;
-				String elementName = element.getAttribute("name");
+				String elementName = e.getAttribute("name");
 				switch (elementName) {
-				case "token":token= parseString((Element) element.getFirstChild());
+				case "token":token= parseString((Element) e.getFirstChild());
 				break;				
-				case "user": user= parseUser((Element) element.getFirstChild());
+				case "user": user= parseUser((Element) e.getFirstChild());
 				break;
 				}
 			}
