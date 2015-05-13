@@ -1,6 +1,8 @@
 package com.sheremet.client;
 
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.*;
 
@@ -9,7 +11,12 @@ import com.sheremet.utils.Bratchyk;
 
 public class BratchykViewPanel extends JPanel{
 
-	public BratchykViewPanel(Bratchyk b,boolean fullView){
+	private final boolean fullView;
+	public BratchykViewPanel(boolean fullView){
+		this.fullView=fullView;
+	}
+	public void load(Bratchyk b) {
+		removeAll();
 		if(fullView){
 			setLayout(new GridLayout(16, 2));
 			JLabel prizvysche=new JLabel("Прізвище");
@@ -119,11 +126,25 @@ public class BratchykViewPanel extends JPanel{
 			add(patron_id);
 			add(patron_idv);
 		}
+
 	}
-	
 	public static void main(String[] args) {
 		JFrame frame=new JFrame();
 		frame.setVisible(true);
-		frame.add(new BratchykViewPanel(Maneken.getBratchyk(), false));
+		final BratchykViewPanel bratchykViewPanel = new BratchykViewPanel(true);
+		frame.add(bratchykViewPanel);
+		frame.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				bratchykViewPanel.load(Maneken.getBratchyk());
+			}
+			
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				bratchykViewPanel.load(Maneken.getBratchyk());
+			}
+		});
+		
 	}
 }

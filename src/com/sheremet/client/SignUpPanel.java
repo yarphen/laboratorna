@@ -18,6 +18,10 @@ import com.sheremet.utils.LoginResult;
 import com.sheremet.utils.User;
 
 public class SignUpPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7522674650270197959L;
 	private DBSecureAPI api; 
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		JFrame frame = new JFrame("Sign up for Spydei bratstvo");

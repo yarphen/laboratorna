@@ -16,6 +16,7 @@ public class TreeViewPanel extends JPanel{
 		String result = "";
 		SBTree tree = new SBTree(api);
 		add(new JScrollPane(tree));
+		BratchykViewPanel panel = new 
 	} 
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
