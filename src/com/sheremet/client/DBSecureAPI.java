@@ -21,6 +21,7 @@ public class DBSecureAPI {
 	public LoginResult login(String login, String password) throws ServerException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("act", "login");
+		map.put("access_token", access_token);
 		map.put("login", login);
 		map.put("password", password);
 		Command command = null;

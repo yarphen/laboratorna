@@ -56,7 +56,7 @@ public class CommandExecutor {
 		case login:
 		{
 			User u = api.getUser((String)command.getMapElement("login"));
-			if (u.passhash ==DBAPI.md5( (String)command.getMapElement("password"))){
+			if (u.passhash.equals(DBAPI.md5( (String)command.getMapElement("password")))){
 				String token = DBAPI.generateToken(u.passhash);
 				api.addAccessToken(u.id, token);
 				return new LoginResult(token, u);
@@ -73,6 +73,14 @@ public class CommandExecutor {
 		case setBratchyk:
 		{
 			return api.setBratchyk((Bratchyk)command.getMapElement("bratchyk"), (Long)command.getMapElement("id"));
+		}
+		case setUserPermission:
+		{
+			return api.setUserPermission((Long)command.getMapElement("id"), (Integer)command.getMapElement("permission"));
+		}
+		case logOut:
+		{
+			return api.delAccessToken((String)command.getMapElement("access_token"));
 		}
 		default:
 			return null;

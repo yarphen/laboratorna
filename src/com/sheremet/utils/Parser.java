@@ -79,7 +79,11 @@ public class Parser {
 
 			map.put("act", type) ;
 			switch (type) {
+			case "logOut":
+				set.add("access_token");
+				break;
 			case "login":
+				set.add("access_token");
 				set.add("login");
 				set.add("password");
 				break;
@@ -510,6 +514,9 @@ public class Parser {
 					break;
 				case "dataposhanuvannia":
 					map.put("dataposhanuvannia", parseDate((Element) element.getFirstChild()));
+					break;
+				case "dataversii":
+					map.put("dataversii", parseDate((Element) element.getFirstChild()));
 					break;
 				case "datavysviaty":
 					map.put("datavysviaty", parseDate((Element) element.getFirstChild()));

@@ -14,5 +14,7 @@ public enum Commands {
 	addBratchyk,
 	deleteBratchyk,
 	deleteBratchykHistory,
-	deleteUser
+	deleteUser,
+	setUserPermission, 
+	logOut
 }

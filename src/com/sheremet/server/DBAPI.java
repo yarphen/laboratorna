@@ -72,7 +72,7 @@ public class DBAPI {
 		return bratchyk;
 	}
 	public boolean setBratchyk(Bratchyk bratchyk, long id){
-		disableVersion(id);
+		disableVersion(id, false);
 		bratchyk.id = id;
 		try {
 			return addVersion(bratchyk);
@@ -122,7 +122,7 @@ public class DBAPI {
 		}
 	}
 	public boolean deleteBratchyk(long id) {
-		return disableVersion(id);
+		return disableVersion(id, true);
 	}
 	public boolean deleteBratchykHistory(long id, Long long1 ) {
 		return delVersion(id, long1);
@@ -170,7 +170,7 @@ public class DBAPI {
 	}
 	public boolean setUser(User user, long id){
 		try{
-			PreparedStatement statement = con.prepareStatement("UPDATE students SET email = ?, name = ?, passhash = ? WHERE id=" + id);
+			PreparedStatement statement = con.prepareStatement("UPDATE users SET email = ?, name = ?, passhash = ? WHERE id=" + id);
 			statement.setString(1, user.email);
 			statement.setString(2, user.name);
 			statement.setString(3, user.passhash);
@@ -182,7 +182,7 @@ public class DBAPI {
 	}
 	public boolean setUserPermission(long user_id, int permission){
 		try{
-			PreparedStatement statement = con.prepareStatement("UPDATE students SET permission=? WHERE id=" + user_id);
+			PreparedStatement statement = con.prepareStatement("UPDATE users SET permission=? WHERE id=" + user_id);
 			statement.setInt(1,permission);
 			statement.execute();
 			return true;
@@ -230,7 +230,7 @@ public class DBAPI {
 	//is using for logout operation, not sending directly
 	boolean delAccessToken(String access_token){
 		try{
-			PreparedStatement statement = con.prepareStatement("DELETE FROM 'tokens' WHERE token="+access_token);
+			PreparedStatement statement = con.prepareStatement("DELETE FROM 'tokens' WHERE token='"+access_token+"'");
 			statement.execute();
 			return true;
 		}catch (SQLException e){
@@ -291,7 +291,7 @@ public class DBAPI {
 	}
 	private boolean addVersion(Bratchyk version) throws SQLException{
 		if (version.patron_id!=null){
-			ResultSet resultSet = getBratchykSet(version.patron_id, BRATCHYKSACTIVEBYPATRON);
+			ResultSet resultSet = getBratchykSet(version.patron_id, BRATCHYKSACTIVEBYID);
 			if (!resultSet.next()) version.patron_id=null;
 		}
 		try{
@@ -375,15 +375,17 @@ public class DBAPI {
 			return false;
 		}
 	}
-	private boolean disableVersion(long id){
+	private boolean disableVersion(long id, boolean b){
 		try{
 			PreparedStatement statement = con.prepareStatement("UPDATE bratchyky SET actual = 0 WHERE actual=1 AND id=" + id);
 			statement.execute();
 			ResultSet resultSet = getBratchykSet(id, BRATCHYKSACTIVEBYPATRON);
-			while(resultSet.next()){
-				Bratchyk bratchyk = currentBratchyk(resultSet);
-				bratchyk.patron_id = null;
-				addVersion(bratchyk);
+			if (b){
+				while(resultSet.next()){
+					Bratchyk bratchyk = currentBratchyk(resultSet);
+					bratchyk.patron_id = null;
+					addVersion(bratchyk);
+				}
 			}
 			return true;
 		}catch (SQLException e){
@@ -420,9 +422,9 @@ public class DBAPI {
 			switch (mode) {
 			case BRATCHYKSACTIVEBYID:
 				if (id==null)
-					query = "SELECT * FROM bratchyky WHERE id IS NULL";
+					query = "SELECT * FROM bratchyky WHERE actual=1 AND id IS NULL";
 				else
-					query = "SELECT * FROM bratchyky WHERE id = "+id;
+					query = "SELECT * FROM bratchyky WHERE actual=1 AND id = "+id;
 				break;
 			case BRATCHYKSALLBYID:
 				if (id==null)
@@ -432,9 +434,9 @@ public class DBAPI {
 				break;
 			case BRATCHYKSACTIVEBYPATRON:
 				if (id==null)
-					query = "SELECT * FROM bratchyky WHERE patron_id IS NULL";
+					query = "SELECT * FROM bratchyky WHERE actual=1 AND patron_id IS NULL";
 				else
-					query = "SELECT * FROM bratchyky WHERE patron_id = "+id;
+					query = "SELECT * FROM bratchyky WHERE actual=1 AND patron_id = "+id;
 				break;
 			default:
 				throw new IllegalArgumentException();

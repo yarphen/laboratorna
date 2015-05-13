@@ -24,8 +24,10 @@ public class Permissions{
 		map.put(Commands.getUser, AUTHORIZEDUSER);
 		map.put(Commands.getUserList, ADMIN);
 		map.put(Commands.login, GUEST);
+		map.put(Commands.logOut, AUTHORIZEDUSER);
 		map.put(Commands.setBratchyk, ADMIN);
 		map.put(Commands.setUser, AUTHORIZEDUSER);
+		map.put(Commands.setUserPermission, ADMIN);
 	}
 	public static Integer get(Object key) {
 		return map.get(key);
