@@ -1,7 +1,11 @@
 package com.sheremet.client;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout.Constraints;
 
 import com.sheremet.utils.User;
 
@@ -12,8 +16,6 @@ public class ClientFrame extends JFrame{
 	protected static final int PermitionsEditMode = 3;
 	protected static final int TreeEditMode = 4;
 	protected static final int TreeViewMode = 5;
-	private ClientStarter clientStarter;
-	private ClientConnection connection;
 	private DBSecureAPI api;
 	private User user;
 	private JPanel acc;
@@ -22,27 +24,30 @@ public class ClientFrame extends JFrame{
 	private JPanel signUp;
 	private JPanel tEdit;
 	private JPanel tView;
-	private JPanel menu;
-	public ClientFrame(ClientConnection connection, ClientStarter clientStarter, DBSecureAPI api2) {
-
+	private MenuPanel menu;
+	private boolean logged;
+	public ClientFrame(DBSecureAPI api2) {
+		setLayout(new GridBagLayout());
 		setVisible(true);
-		this.connection=connection;
-		this.clientStarter=clientStarter;
 		this.api = api2;
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridy=1;
+		constraints.anchor=GridBagConstraints.PAGE_START;
 		acc=new OwnAccountPanel(api);
-				add(acc);
+		add(acc, constraints);
 		perm=new PermitionsEditPanel(api);
-				add(perm);
+		add(perm, constraints);
 		signIn=new SignInPanel(api, this);
-				add(signIn);
+		add(signIn, constraints);
 		signUp=new SignUpPanel(api, this);
-				add(signUp);
+		add(signUp, constraints);
 		tEdit = new TreeEditPanel(api);
-				add(tEdit);
+		add(tEdit, constraints);
 		tView = new TreeViewPanel(api);
-				add(tView);
+		add(tView, constraints);
+		constraints.gridy=0;
 		menu=new MenuPanel(this);
-				add(menu);
+		add(menu);
 	}
 	public void setUser(User user ) {
 		this.user=user;
@@ -57,7 +62,6 @@ public class ClientFrame extends JFrame{
 	}
 	public void showMessage(final String string) {
 		new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				javax.swing.JOptionPane.showMessageDialog(null, string);
@@ -69,7 +73,7 @@ public class ClientFrame extends JFrame{
 		case SignInMode:
 			acc.setVisible(false);
 			perm.setVisible(false);
-			signIn.setVisible(true);
+			signIn.setVisible(true);//visible
 			signUp.setVisible(false);
 			tEdit.setVisible(false);
 			tView.setVisible(false);
@@ -78,37 +82,37 @@ public class ClientFrame extends JFrame{
 			acc.setVisible(false);
 			perm.setVisible(false);
 			signIn.setVisible(false);
-			signUp.setVisible(true);
+			signUp.setVisible(true);//visible
 			tEdit.setVisible(false);
 			tView.setVisible(false);
-			
+
 			break;
 		case OwnAccountMode:
-			acc.setVisible(true);
+			acc.setVisible(true);//visible
 			perm.setVisible(false);
 			signIn.setVisible(false);
 			signUp.setVisible(false);
 			tEdit.setVisible(false);
 			tView.setVisible(false);
-			
+
 			break;
 		case PermitionsEditMode:
 			acc.setVisible(false);
-			perm.setVisible(true);
+			perm.setVisible(true);//visible
 			signIn.setVisible(false);
 			signUp.setVisible(false);
 			tEdit.setVisible(false);
 			tView.setVisible(false);
-			
+
 			break;
 		case TreeEditMode:
 			acc.setVisible(false);
 			perm.setVisible(false);
 			signIn.setVisible(false);
 			signUp.setVisible(false);
-			tEdit.setVisible(true);
+			tEdit.setVisible(true);//visible
 			tView.setVisible(false);
-			
+
 			break;
 		case TreeViewMode:
 			acc.setVisible(false);
@@ -116,12 +120,26 @@ public class ClientFrame extends JFrame{
 			signIn.setVisible(false);
 			signUp.setVisible(false);
 			tEdit.setVisible(false);
-			tView.setVisible(true);
-			
+			tView.setVisible(true);//visible
+
 			break;
 
 		default:
 			break;
 		}
+	}
+	public boolean getLogged() {
+		return logged;
+	}
+	public void setLogged(boolean b) {
+		logged=b;
+		refreshMode();
+	}
+	public void refreshMode() {
+		if (user!=null)
+			menu.setMode(user.permission);
+		else
+			menu.setMode(0);
+		setMode(5);
 	}
 }
