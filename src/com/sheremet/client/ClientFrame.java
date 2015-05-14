@@ -62,6 +62,7 @@ public class ClientFrame extends JFrame{
 			@Override public void windowClosed(WindowEvent e) {}
 			@Override public void windowActivated(WindowEvent e) {}
 		});
+		setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 	public void setUser(User user ) {
 		this.user=user;
