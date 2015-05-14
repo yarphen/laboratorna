@@ -52,7 +52,7 @@ public class ApiTester {
 					break;
 					case 11:o=api.login("email", "qwerty");//ok
 					break;
-					case 12:o=api.logOut();
+					case 12:o=api.logOut();//ok
 					break;
 					case 13:o=api.setBratchyk(Maneken.getBratchyk(), 431539669351030L);//ok
 					break;
