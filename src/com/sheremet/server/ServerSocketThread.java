@@ -10,10 +10,12 @@ import com.sheremet.utils.Parser;
 
 public class ServerSocketThread extends Thread{
 	private Socket socket;
-	private DBAPI api = new DBAPI();
-	private SecurityManager manager = new SecurityManager(api);
-	public ServerSocketThread(Socket socket) {
+	private DBAPI api;
+	private SecurityManager manager;
+	public ServerSocketThread(Socket socket, DBAPI api) {
 		this.socket=socket;
+		this.api=api;
+		manager = new SecurityManager(api);
 	}
 	@Override
 	public void run() {
