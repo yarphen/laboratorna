@@ -1,5 +1,6 @@
 package com.sheremet.client;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -29,12 +30,13 @@ public class SignUpPanel extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ClientConnection connection = new ClientConnection();
 		DBSecureAPI api = new DBSecureAPI(connection);
-		SignInPanel in = new SignInPanel(api, new ClientFrame(connection, null, api) );
+		SignInPanel in = new SignInPanel(api, new ClientFrame(api) );
 //		in.placeComponents(frame);
 		frame.add(in);
 		frame.setVisible(true);
 	}
 	public SignUpPanel(DBSecureAPI api2, final ClientFrame clientFrame) {
+		setLayout(new GridLayout(5, 2));
 		api=api2;
 		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setBounds(10, 10, 80, 25);
@@ -84,6 +86,9 @@ public class SignUpPanel extends JPanel {
 					clientFrame.showMessage("Successful!");
 				}else{
 					clientFrame.showMessage("Failed!");
+				}
+				if (clientFrame.getLogged()){
+					clientFrame.refreshMode();
 				}
 			}
 
