@@ -81,7 +81,14 @@ public class SignUpPanel extends JPanel {
 				map.put("email", email.getText());
 				map.put("name", nameText.getText());
 				map.put("passhash", DBAPI.md5(new String(passwordText.getPassword())));
-				LoginResult loginResult = api.addUser(new User(map));
+				Object result = null;
+				LoginResult loginResult = null;
+				try{
+					result = api.addUser(new User(map));
+				 loginResult = (LoginResult) result;
+				}catch(ClassCastException castException){
+					clientFrame.showMessage((String) result);
+				}
 				if (loginResult!=null&&!loginResult.getAccess_token().isEmpty()){
 					clientFrame.showMessage("Successful!");
 				}else{
