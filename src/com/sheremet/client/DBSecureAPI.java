@@ -190,12 +190,18 @@ public class DBSecureAPI {
 		} catch (Exception e) {
 			return null;
 		}
-		LoginResult result = (LoginResult) command.send(connection);
+		Object resultFirst  =command.send(connection);
+		LoginResult result = null;
+		try{
+		result = (LoginResult) resultFirst;
 		access_token=result.getAccess_token();
 		this.user = result.getUser();
 		if (clientFrame!=null){
-			clientFrame.setUser(user);
+			clientFrame.setUser(this.user);
 			clientFrame.setLogged(true);
+		}
+		}catch(Exception e){
+			clientFrame.showMessage((String) resultFirst);
 		}
 		return result;
 	}
