@@ -67,7 +67,7 @@ public class TreeEditPanel extends JPanel{
 			}
 		});
 		bagConstraints.gridx=3;
-		add(add, bagConstraints);
+		add(del, bagConstraints);
 		bagConstraints.gridx=1;
 		reload();
 	}

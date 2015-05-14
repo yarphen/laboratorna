@@ -144,6 +144,10 @@ public class SBTree extends JTree{
 
 	}
 	public Long getSelectedId() {
-		return ((Bratchyk)((DefaultMutableTreeNode) getSelectionPath().getLastPathComponent()).getUserObject()).id;
+		try{
+			return ((Bratchyk)((DefaultMutableTreeNode) getSelectionPath().getLastPathComponent()).getUserObject()).id;
+		}catch(Exception e){
+			return null;
+		}
 	}
 }

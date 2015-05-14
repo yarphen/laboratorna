@@ -41,8 +41,8 @@ public class Maneken {
 		return user;
 	}
 	public static String getString(String prefix) {
-		new SecureRandom();
-		return prefix + getLong();
+		
+		return prefix;
 	}
 	public static Long getLong() {
 		return new Random().nextLong();
