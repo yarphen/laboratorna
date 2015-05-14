@@ -8,7 +8,7 @@ import com.sheremet.utils.LoginResult;
 import com.sheremet.utils.User;
 
 public class DBSecureAPI {
-	private String access_token="3aa39d0c9c4c8dff9bead5ac50bb325b23989ed8016c468f68a0dc024bb323c546361eac4d646d8ade682ba261ee1226";
+	private String access_token="";
 	private User user;
 	private ClientConnection connection;
 	private ClientFrame clientFrame;
@@ -30,8 +30,10 @@ public class DBSecureAPI {
 			LoginResult result = (LoginResult) command.send(connection);
 			access_token = result.getAccess_token();
 			user = result.getUser();
-			if (clientFrame!=null)
+			if (clientFrame!=null){
 				clientFrame.setUser(user);
+				clientFrame.setLogged(true);
+			}
 			return result;
 		} catch (Exception e) {
 			try{
@@ -191,8 +193,10 @@ public class DBSecureAPI {
 		LoginResult result = (LoginResult) command.send(connection);
 		access_token=result.getAccess_token();
 		this.user = result.getUser();
-		if (clientFrame!=null)
+		if (clientFrame!=null){
 			clientFrame.setUser(user);
+			clientFrame.setLogged(true);
+		}
 		return result;
 	}
 	public boolean addBratchyk(Bratchyk bratchyk) throws ServerException{
@@ -293,6 +297,7 @@ public class DBSecureAPI {
 			return false;
 		}
 		access_token = "";
+		clientFrame.setLogged(false);
 		try{
 			return (Boolean) command.send(connection);
 		}catch(ClassCastException exception){
