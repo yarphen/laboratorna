@@ -27,6 +27,7 @@ public class ClientConnection extends Thread{
 		socket = new Socket(InetAddress.getLocalHost(), 9999);//for local server. change it for remote server
 		writer = new PrintWriter(socket.getOutputStream());
 		scanner = new Scanner (socket.getInputStream());
+		setDaemon(true);
 		start();
 	}
 	public void send(String command, StringResultHandler handler){
@@ -40,18 +41,21 @@ public class ClientConnection extends Thread{
 	}
 	@Override
 	public void run() {
-			while(true){
-				try {
-					Node node = queue.take();
-					writer.println(node.command);
-					writer.flush();
-					if (scanner.hasNextLine())
-					node.handler.handle(scanner.nextLine());
-				} catch (Exception e) {
-					e.printStackTrace();
+		while(true){
+			try {
+				Node node = queue.take();
+				writer.println(node.command);
+				writer.flush();
+				if (scanner.hasNextLine()){
+					String temp=scanner.nextLine();
+					System.out.println(temp);
+					node.handler.handle(temp);
 				}
-				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+
+		}
 
 	}
 }
