@@ -129,6 +129,7 @@ public class DBAPI {
 	}
 
 	public LoginResult addUser(User user){
+		if(getUser(user.email)!=null) return null;
 		Long id = generateID() ;
 		try{
 			PreparedStatement statement = con.prepareStatement("INSERT INTO 'users' VALUES(?, ?, ?, ?, ?)");
@@ -209,7 +210,7 @@ public class DBAPI {
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM tokens WHERE token='"+access_token+"'");
 			ResultSet set = statement.executeQuery();
 			return getUser(set.getLong("user_id")).permission;
-		}catch (SQLException e){
+		}catch (Exception e){
 			return Permissions.GUEST;
 		}
 	}
