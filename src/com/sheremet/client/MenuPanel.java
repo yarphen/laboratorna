@@ -2,20 +2,23 @@ package com.sheremet.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.sheremet.server.Permissions;
 
 public class MenuPanel extends JPanel {
 	private ClientFrame clientFrame;
+	 private HashSet<JComponent> set = new HashSet<JComponent>(); 
 	public MenuPanel(ClientFrame clientFrame) {
 		this.clientFrame = clientFrame;
 		setMode(0);
 	}
 	public void setMode(int mode) {
-		removeAll();
+		removeAllComponents();
 		switch (mode) {
 		case Permissions.ADMIN:{
 			addLogoutButton();
@@ -45,6 +48,11 @@ public class MenuPanel extends JPanel {
 		break;
 		}
 	}
+	private void removeAllComponents() {
+		for(JComponent c:set)
+			remove(c);
+		set.clear();
+	}
 	private void addSignInButton(){
 		JButton button = new JButton("SignIn");
 		button.addActionListener(new ActionListener() {
@@ -55,6 +63,7 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(button);
+		set.add(button);
 	}
 	private void addSignUpButton(){
 		JButton button = new JButton("SignUp");
@@ -66,6 +75,7 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(button);
+		set.add(button);
 	}
 	private void addOwnAccountButton(){
 		JButton button = new JButton("OwnAccount");
@@ -77,6 +87,7 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(button);
+		set.add(button);
 	}
 	private void addPermitionsEditButton(){
 		JButton button = new JButton("PermitionsEdit");
@@ -88,6 +99,7 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(button);
+		set.add(button);
 	}
 	private void addTreeEditButton(){
 		JButton button = new JButton("TreeEdit");
@@ -99,6 +111,7 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(button);
+		set.add(button);
 	}
 	private void addTreeViewButton(){
 		JButton button = new JButton("TreeView");
@@ -110,6 +123,7 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(button);
+		set.add(button);
 	}
 	private void addLogoutButton(){
 		JButton button = new JButton("LOG OUT");
@@ -121,5 +135,6 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(button);
+		set.add(button);
 	}
 }
