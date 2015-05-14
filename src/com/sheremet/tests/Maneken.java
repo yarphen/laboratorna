@@ -21,7 +21,7 @@ public class Maneken {
 		bratchyk.id =getLong();
 		bratchyk.imya = getString("IM'YA:");
 		bratchyk.kontakty = getString("KONTAKTY:");
-		bratchyk.patron_id =431538609040449L;
+		bratchyk.patron_id =431590027195734L;
 		bratchyk.pobatkovi = getString("POBATKOVI:");
 		bratchyk.posady = getString("POSADY:");
 		bratchyk.prizvysche = getString("PRIZVYSHCHE:");

@@ -14,7 +14,7 @@ import com.sheremet.utils.Bratchyk;
 public class ApiTester {
 	public static void main(String[] args) {
 		try {
-			ServerStarter.main(null);
+//			ServerStarter.main(null);
 			DBSecureAPI api = new DBSecureAPI(new ClientConnection());
 			Scanner scanner = new Scanner(System.in);
 			while(true){
@@ -50,7 +50,7 @@ public class ApiTester {
 					break;
 					case 10:o=api.getUserList();//ok
 					break;
-					case 11:o=api.login("email", "qwerty");//ok
+					case 11:o=api.login("qw", "qw");//ok
 					break;
 					case 12:o=api.logOut();//ok
 					break;
