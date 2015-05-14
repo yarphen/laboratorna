@@ -28,7 +28,7 @@ public class ApiTester {
 				Object o=null;
 				try{
 					switch (key) {
-					case 0:o=api.addBratchyk(Maneken.getBratchyk());//ok
+					case 0:o=api.addBratchyk(Maneken.getBratchyk(0L));//ok
 					break;
 					case 1:o=api.addUser(Maneken.getUser());//ok
 					break;
@@ -54,7 +54,7 @@ public class ApiTester {
 					break;
 					case 12:o=api.logOut();//ok
 					break;
-					case 13:o=api.setBratchyk(Maneken.getBratchyk(), 431539669351030L);//ok
+					case 13:o=api.setBratchyk(Maneken.getBratchyk(0L), 431539669351030L);//ok
 					break;
 					case 14:o=api.setUser(Maneken.getUser(), 431532197364060L);//ok
 					break;

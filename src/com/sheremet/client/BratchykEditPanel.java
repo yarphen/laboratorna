@@ -31,7 +31,7 @@ public class BratchykEditPanel extends JPanel{
 	private JTextField dnv;
 	private JTextField dvysv;
 	private JLabel dvys;
-	private JTextField dverv;
+	private JLabel dverv;
 	private JLabel dver;
 	private JTextField dopv;
 	private JLabel dop;
@@ -49,9 +49,9 @@ public class BratchykEditPanel extends JPanel{
 	private JTextField specialnistv;
 	private JTextField patron_idv;
 	private JLabel version_id;
-	private JTextField version_idv;
+	private JLabel version_idv;
 	private JLabel patron_id;
-	private JTextField idv;
+	private JLabel idv;
 	private JLabel id;
 	private JButton save;
 	private DBSecureAPI api;
@@ -64,18 +64,24 @@ public class BratchykEditPanel extends JPanel{
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (test()){
+				Bratchyk bratchyk =null;
+				try{
+					bratchyk = getBratchyk();
+				}catch(Exception exception){
+					BratchykEditPanel.this.clientFrame.showMessage(exception.getLocalizedMessage());
+					return;
+				}
 					try{
 						if (number==null)
-							BratchykEditPanel.this.api.addBratchyk(getBratchyk());
+							BratchykEditPanel.this.api.addBratchyk(bratchyk);
 						else
-							BratchykEditPanel.this.api.setBratchyk(getBratchyk(), number);
+							BratchykEditPanel.this.api.setBratchyk(bratchyk, number);
 						BratchykEditPanel.this.clientFrame.reloadTree();
 					}catch(ServerException exception){
 						BratchykEditPanel.this.clientFrame.showMessage(exception.getMessage()+": "+exception.getLocalizedMessage());
 					}
 				}
-			}
+			
 		});
 	}
 	protected boolean test() {
@@ -148,9 +154,9 @@ public class BratchykEditPanel extends JPanel{
 			dpv=new JTextField("not set!");
 		dver=new JLabel("Дата версії");
 		if (b.dataversii!=null)
-			dverv=new JTextField(""+b.dataversii);
+			dverv=new JLabel(""+b.dataversii);
 		else
-			dverv=new JTextField("not set!");
+			dverv=new JLabel("not set!");
 		dvys=new JLabel("Дата висвяти");
 		if (b.datavysviaty!=null)
 			dvysv=new JTextField(""+b.datavysviaty);
@@ -183,9 +189,9 @@ public class BratchykEditPanel extends JPanel{
 			specialnistv=new JTextField("not set!");
 		id=new JLabel("ID");
 		if (b.id!=null)
-			idv=new JTextField(""+b.id);
+			idv=new JLabel(""+b.id);
 		else
-			idv=new JTextField("not set!");
+			idv=new JLabel("not set!");
 		patron_id=new JLabel("Patron ID");
 		if (b.patron_id!=null)
 			patron_idv=new JTextField(""+b.patron_id);
@@ -193,9 +199,9 @@ public class BratchykEditPanel extends JPanel{
 			patron_idv=new JTextField("not set!");
 		version_id=new JLabel("Version ID");
 		if (b.version_id!=null)
-			version_idv=new JTextField(""+b.version_id);
+			version_idv=new JLabel(""+b.version_id);
 		else
-			version_idv=new JTextField("not set!");
+			version_idv=new JLabel("not set!");
 		add(prizvysche);
 		add(prizvyschev);
 		add(imya);

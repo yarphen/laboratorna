@@ -10,7 +10,7 @@ import com.sheremet.utils.User;
 
 public class Maneken {
 
-	public static Bratchyk getBratchyk() {
+	public static Bratchyk getBratchyk(Long id) {
 		Bratchyk bratchyk = new Bratchyk();
 		bratchyk.dataankety = getDate();
 		bratchyk.datanarodzhennia = getDate();
@@ -21,7 +21,7 @@ public class Maneken {
 		bratchyk.id =getLong();
 		bratchyk.imya = getString("IM'YA:");
 		bratchyk.kontakty = getString("KONTAKTY:");
-		bratchyk.patron_id =431590027195734L;
+		bratchyk.patron_id =id;
 		bratchyk.pobatkovi = getString("POBATKOVI:");
 		bratchyk.posady = getString("POSADY:");
 		bratchyk.prizvysche = getString("PRIZVYSHCHE:");
@@ -51,7 +51,7 @@ public class Maneken {
 		return new Random().nextInt();
 	}
 	public static Date getDate() {
-		return new Date(getLong());
+		return new Date(System.currentTimeMillis());
 	}
 	public static void main(String[] args) {
 		System.out.println(getString("ssdfsdf"));
