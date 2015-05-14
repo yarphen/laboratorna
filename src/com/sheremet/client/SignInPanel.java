@@ -51,6 +51,9 @@ public class SignInPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					api.login(userText.getText(), new String(passwordText.getPassword()));
+					if (clientFrame.getLogged()){
+						clientFrame.refreshMode();
+					}
 				} catch (ServerException e1) {
 					clientFrame.showMessage(e1.getMessage()+": "+e1.getLocalizedMessage());
 				}
