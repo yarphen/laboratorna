@@ -2,6 +2,8 @@ package com.sheremet.client;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +21,7 @@ public class ClientFrame extends JFrame{
 	private DBSecureAPI api;
 	private User user;
 	private JPanel acc;
-	private JPanel perm;
+	private PermitionsEditPanel perm;
 	private JPanel signIn;
 	private JPanel signUp;
 	private JPanel tEdit;
@@ -32,10 +34,10 @@ public class ClientFrame extends JFrame{
 		this.api = api2;
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridy=1;
-		constraints.anchor=GridBagConstraints.PAGE_START;
+		constraints.anchor=GridBagConstraints.NORTH;
 		acc=new OwnAccountPanel(api);
 		add(acc, constraints);
-		perm=new PermitionsEditPanel(api);
+		perm=new PermitionsEditPanel(api, this);
 		add(perm, constraints);
 		signIn=new SignInPanel(api, this);
 		add(signIn, constraints);
@@ -48,6 +50,18 @@ public class ClientFrame extends JFrame{
 		constraints.gridy=0;
 		menu=new MenuPanel(this);
 		add(menu);
+		addWindowListener(new WindowListener() {
+			@Override public void windowOpened(WindowEvent e) {}
+			@Override public void windowIconified(WindowEvent e) {}
+			@Override public void windowDeiconified(WindowEvent e) {}
+			@Override public void windowDeactivated(WindowEvent e) {}
+			@SuppressWarnings("deprecation")
+			@Override public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+			@Override public void windowClosed(WindowEvent e) {}
+			@Override public void windowActivated(WindowEvent e) {}
+		});
 	}
 	public void setUser(User user ) {
 		this.user=user;
@@ -55,6 +69,7 @@ public class ClientFrame extends JFrame{
 	public void logOut(){
 		try {
 			api.logOut();
+			refreshMode();
 		} catch (ServerException e) {
 			showMessage(e.getMessage()+": "+e.getLocalizedMessage());
 		}
@@ -71,55 +86,29 @@ public class ClientFrame extends JFrame{
 	public void setMode(int mode) {
 		switch (mode) {
 		case SignInMode:
-			acc.setVisible(false);
-			perm.setVisible(false);
+			setAllInvisible();
 			signIn.setVisible(true);//visible
-			signUp.setVisible(false);
-			tEdit.setVisible(false);
-			tView.setVisible(false);
 			break;
 		case SignUpMode:
-			acc.setVisible(false);
-			perm.setVisible(false);
-			signIn.setVisible(false);
+			setAllInvisible();
 			signUp.setVisible(true);//visible
-			tEdit.setVisible(false);
-			tView.setVisible(false);
-
 			break;
 		case OwnAccountMode:
+			setAllInvisible();
 			acc.setVisible(true);//visible
-			perm.setVisible(false);
-			signIn.setVisible(false);
-			signUp.setVisible(false);
-			tEdit.setVisible(false);
-			tView.setVisible(false);
-
 			break;
 		case PermitionsEditMode:
-			acc.setVisible(false);
+			 perm.load();
+			setAllInvisible();
 			perm.setVisible(true);//visible
-			signIn.setVisible(false);
-			signUp.setVisible(false);
-			tEdit.setVisible(false);
-			tView.setVisible(false);
-
 			break;
 		case TreeEditMode:
-			acc.setVisible(false);
-			perm.setVisible(false);
-			signIn.setVisible(false);
-			signUp.setVisible(false);
+			setAllInvisible();
 			tEdit.setVisible(true);//visible
-			tView.setVisible(false);
 
 			break;
 		case TreeViewMode:
-			acc.setVisible(false);
-			perm.setVisible(false);
-			signIn.setVisible(false);
-			signUp.setVisible(false);
-			tEdit.setVisible(false);
+			setAllInvisible();
 			tView.setVisible(true);//visible
 
 			break;
@@ -136,10 +125,18 @@ public class ClientFrame extends JFrame{
 		refreshMode();
 	}
 	public void refreshMode() {
-		if (user!=null)
+		if (logged)
 			menu.setMode(user.permission);
 		else
 			menu.setMode(0);
 		setMode(5);
+	}
+	private void setAllInvisible() {
+		acc.setVisible(false);
+		perm.setVisible(false);
+		signIn.setVisible(false);
+		signUp.setVisible(false);
+		tEdit.setVisible(false);
+		tView.setVisible(false);
 	}
 }
