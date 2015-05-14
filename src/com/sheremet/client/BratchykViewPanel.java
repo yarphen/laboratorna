@@ -1,8 +1,11 @@
 package com.sheremet.client;
 
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -11,13 +14,9 @@ import com.sheremet.utils.Bratchyk;
 
 public class BratchykViewPanel extends JPanel{
 
-	private final boolean fullView;
-	public BratchykViewPanel(boolean fullView){
-		this.fullView=fullView;
-	}
-	public void load(Bratchyk b) {
+	public void load(boolean fullview, Bratchyk b) {
 		removeAll();
-		if(fullView){
+		if(fullview){
 			setLayout(new GridLayout(16, 2));
 			JLabel prizvysche=new JLabel("Прізвище");
 			JLabel prizvyschev=new JLabel(""+b.prizvysche);
@@ -126,23 +125,38 @@ public class BratchykViewPanel extends JPanel{
 			add(patron_id);
 			add(patron_idv);
 		}
-
+		
 	}
 	public static void main(String[] args) {
 		JFrame frame=new JFrame();
 		frame.setVisible(true);
-		final BratchykViewPanel bratchykViewPanel = new BratchykViewPanel(true);
+		final BratchykViewPanel bratchykViewPanel = new BratchykViewPanel();
 		frame.add(bratchykViewPanel);
-		frame.addFocusListener(new FocusListener() {
+		frame.addMouseListener(new MouseListener() {
 			
 			@Override
-			public void focusLost(FocusEvent e) {
-				bratchykViewPanel.load(Maneken.getBratchyk());
+			public void mouseReleased(MouseEvent e) {
+				bratchykViewPanel.load(true, Maneken.getBratchyk());
 			}
 			
 			@Override
-			public void focusGained(FocusEvent arg0) {
-				bratchykViewPanel.load(Maneken.getBratchyk());
+			public void mousePressed(MouseEvent e) {
+				bratchykViewPanel.load(true, Maneken.getBratchyk());
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				bratchykViewPanel.load(true, Maneken.getBratchyk());
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				bratchykViewPanel.load(true, Maneken.getBratchyk());
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				bratchykViewPanel.load(true, Maneken.getBratchyk());
 			}
 		});
 		
