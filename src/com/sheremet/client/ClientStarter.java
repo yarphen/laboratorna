@@ -1,5 +1,9 @@
 package com.sheremet.client;
 
+import java.net.ConnectException;
+
+import javax.swing.JOptionPane;
+
 public class ClientStarter {
 	private ClientConnection connection;
 	private ClientFrame clientFrame;
@@ -9,11 +13,22 @@ public class ClientStarter {
 		starter.run();
 	}
 	private void run() {
-		try{
-			connection = new ClientConnection();
-		}catch(Exception e){}
-		DBSecureAPI api = new DBSecureAPI(connection);
-		clientFrame = new ClientFrame(connection, this, api);
+		while(true){
+			try{
+				connection = new ClientConnection();
+				break;
+			}catch(ConnectException e){
+				if (javax.swing.JOptionPane.showConfirmDialog(null, "Cannot connect, bliat! Retry?", "Error!", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE)==JOptionPane.YES_OPTION)
+					continue;
+				else
+					return;
+			}catch (Exception e) {
+				javax.swing.JOptionPane.showMessageDialog(null, "Sorry, starting failed!");
+				return;
+			}
+		}
+		api = new DBSecureAPI(connection);
+		clientFrame = new ClientFrame(api);
 		api.setClientFrame(clientFrame);
 		clientFrame.setMode(0);
 	}
