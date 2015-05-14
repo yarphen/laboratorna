@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 
 public class ServerConnection extends Thread{
 	private ServerSocket server;
+	DBAPI dbapi=  new DBAPI();
 	@Override
 	public void run() {
 		try {
@@ -14,7 +15,7 @@ public class ServerConnection extends Thread{
 		}
 		while(true){
 			try {
-				new ServerSocketThread(server.accept()).start();
+				new ServerSocketThread(server.accept(),dbapi).start();
 			} catch (IOException e) {
 				e.printStackTrace();
 			};
