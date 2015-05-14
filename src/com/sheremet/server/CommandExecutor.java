@@ -56,7 +56,7 @@ public class CommandExecutor {
 		case login:
 		{
 			User u = api.getUser((String)command.getMapElement("login"));
-			if (u.passhash.equals(DBAPI.md5( (String)command.getMapElement("password")))){
+			if (u!=null&&u.passhash.equals(DBAPI.md5( (String)command.getMapElement("password")))){
 				String token = DBAPI.generateToken(u.passhash);
 				api.addAccessToken(u.id, token);
 				return new LoginResult(token, u);
