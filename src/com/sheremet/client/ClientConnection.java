@@ -30,7 +30,6 @@ public class ClientConnection extends Thread{
 		start();
 	}
 	public void send(String command, StringResultHandler handler){
-
 		command = to1line(command);
 		queue.add(new Node(command, handler));
 	}
@@ -46,6 +45,7 @@ public class ClientConnection extends Thread{
 					Node node = queue.take();
 					writer.println(node.command);
 					writer.flush();
+					if (scanner.hasNextLine())
 					node.handler.handle(scanner.nextLine());
 				} catch (Exception e) {
 					e.printStackTrace();
