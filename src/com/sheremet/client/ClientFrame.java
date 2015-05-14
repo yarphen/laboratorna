@@ -24,8 +24,8 @@ public class ClientFrame extends JFrame{
 	private PermitionsEditPanel perm;
 	private JPanel signIn;
 	private JPanel signUp;
-	private JPanel tEdit;
-	private JPanel tView;
+	private TreeEditPanel tEdit;
+	private TreeViewPanel tView;
 	private MenuPanel menu;
 	private boolean logged;
 	public ClientFrame(DBSecureAPI api2) {
@@ -43,9 +43,9 @@ public class ClientFrame extends JFrame{
 		add(signIn, constraints);
 		signUp=new SignUpPanel(api, this);
 		add(signUp, constraints);
-		tEdit = new TreeEditPanel(api);
+		tEdit = new TreeEditPanel(api, this);
 		add(tEdit, constraints);
-		tView = new TreeViewPanel(api);
+		tView = new TreeViewPanel(api, this);
 		add(tView, constraints);
 		constraints.gridy=0;
 		menu=new MenuPanel(this);
@@ -138,5 +138,13 @@ public class ClientFrame extends JFrame{
 		signUp.setVisible(false);
 		tEdit.setVisible(false);
 		tView.setVisible(false);
+	}
+	public User getUser() {
+		// TODO Auto-generated method stub
+		return user;
+	}
+	public void reloadTree() {
+		  tView.reload();
+		  tEdit.reload();
 	}
 }

@@ -2,6 +2,8 @@ package com.sheremet.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashSet;
 
 import javax.swing.JButton;
@@ -12,7 +14,7 @@ import com.sheremet.server.Permissions;
 
 public class MenuPanel extends JPanel {
 	private ClientFrame clientFrame;
-	 private HashSet<JComponent> set = new HashSet<JComponent>(); 
+	private HashSet<JComponent> set = new HashSet<JComponent>(); 
 	public MenuPanel(ClientFrame clientFrame) {
 		this.clientFrame = clientFrame;
 		setMode(0);
@@ -47,6 +49,7 @@ public class MenuPanel extends JPanel {
 		}
 		break;
 		}
+		clientFrame.reloadTree();
 	}
 	private void removeAllComponents() {
 		for(JComponent c:set)
@@ -110,6 +113,8 @@ public class MenuPanel extends JPanel {
 				clientFrame.setMode(ClientFrame.TreeEditMode);
 			}
 		});
+
+		
 		add(button);
 		set.add(button);
 	}
